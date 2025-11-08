@@ -1,4 +1,4 @@
-package com.utec.citasutec.repository;
+package com.utec.citasutec.repository.factory;
 
 import java.util.Optional;
 

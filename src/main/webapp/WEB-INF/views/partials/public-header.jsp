@@ -1,16 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dev_0x
-  Date: 5/11/25
-  Time: 9:52 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<header id="public-header" class="bg-white shadow-sm sticky top-0 z-20">
+  <nav class="max-w-full px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center space-x-6">
+        <span class="text-xl font-bold text-gray-900">Citas UTEC</span>
+      </div>
+      <div class="flex items-center">
+        <a href="${pageContext.request.contextPath}/login.jsp">
+          <button
+              type="submit"
+              class="bg-(--primary) hover:bg-(--primary)/90 text-gray-100 px-3 py-2 text-[13px] font-medium rounded-md transition duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-(--primary)/80"
+          >
+            Iniciar Sesi&oacute;n
+          </button>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

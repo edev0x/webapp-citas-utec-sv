@@ -1,4 +1,4 @@
-package com.utec.citasutec.model;
+package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,9 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "recordatorio")
+@Table(name = "recordatorio", indexes = {
+    @Index(name = "id_cita", columnList = "id_cita")
+})
 public class Reminder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

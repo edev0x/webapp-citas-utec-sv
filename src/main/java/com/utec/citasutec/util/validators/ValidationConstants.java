@@ -1,26 +1,16 @@
 package com.utec.citasutec.util.validators;
 
-import java.util.regex.Pattern;
-
 public final class ValidationConstants {
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
-    private static final Pattern TEXT_ONLY_PATTERN = Pattern.compile("^[a-zA-Z\\s]+$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^[0-9]{8}$");
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
-    private static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
-    private static final Pattern TIME_PATTERN = Pattern.compile("^[0-9]{2}:[0-9]{2}:[0-9]{2}$");
-    private static final Pattern DATE_TIME_PATTERN = Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$");
+    public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    private InputValidation() {
+    public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
+    public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MAX_NAME_LENGTH = 100;
+    public static final int MIN_NAME_LENGTH = 4;
+
+    private ValidationConstants() {
         throw new IllegalStateException("Utility class");
     }
 
-    public static boolean isNullOrEmpty(String value) {
-        return value == null || value.isEmpty();
-    }
-
-    public static boolean isNullOrWhitespace(String value) {
-        return value == null || value.trim().isEmpty();
-    }
 }

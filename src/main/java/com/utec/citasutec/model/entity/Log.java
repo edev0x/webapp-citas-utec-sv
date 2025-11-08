@@ -1,4 +1,4 @@
-package com.utec.citasutec.model;
+package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,11 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "bitacora")
+@Table(name = "bitacora", indexes = {
+    @Index(name = "idx_cita", columnList = "id_cita"),
+    @Index(name = "idx_usuario", columnList = "id_usuario"),
+    @Index(name = "idx_fecha", columnList = "fecha_accion")
+})
 public class Log {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

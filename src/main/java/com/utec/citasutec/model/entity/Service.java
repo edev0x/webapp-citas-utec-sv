@@ -1,4 +1,4 @@
-package com.utec.citasutec.model;
+package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,9 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "servicio")
+@Table(name = "servicio", indexes = {
+    @Index(name = "idx_profesional", columnList = "id_profesional")
+})
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

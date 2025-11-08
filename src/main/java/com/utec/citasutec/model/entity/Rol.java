@@ -1,11 +1,10 @@
-package com.utec.citasutec.model;
+package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.util.LinkedHashSet;
@@ -14,7 +13,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "rol")
+@Table(name = "rol", indexes = {
+    @Index(name = "idx_nombre", columnList = "nombre")
+}, uniqueConstraints = {
+    @UniqueConstraint(name = "nombre", columnNames = {"nombre"})
+})
 public class Rol {
     @Id
     @Column(name = "id_rol", nullable = false)
@@ -31,4 +34,11 @@ public class Rol {
     @OneToMany(mappedBy = "rol")
     private Set<User> users = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "Rol{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

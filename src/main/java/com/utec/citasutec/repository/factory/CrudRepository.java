@@ -1,4 +1,4 @@
-package com.utec.citasutec.repository;
+package com.utec.citasutec.repository.factory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -11,7 +11,6 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
 
     @PersistenceContext(unitName = "citasUtecPU")
     protected EntityManager em;
-
     private final Class<T> entityClass;
 
     protected CrudRepository(Class<T> entityClass) {
@@ -28,6 +27,7 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
 
     public void save(T entity) {
         em.persist(entity);
+        em.flush();
     }
 
     public T update(T entity) {

@@ -22,21 +22,22 @@ public class AppIdentityStore implements IdentityStore {
 
     @Override
     public CredentialValidationResult validate(Credential credential) {
-        log.atInfo().log("Validating credentials");
+        if (credential instanceof UsernamePasswordCredential upc) {
+            log.atInfo().log("Validating credentials");
 
-        if (!(credential instanceof UsernamePasswordCredential upc)) {
-            return CredentialValidationResult.INVALID_RESULT;
-        }
-        LoginDto loginDto = new LoginDto(upc.getCaller(), upc.getPasswordAsString(), false);
-        UserDto userDto = authService.login(loginDto);
+            LoginDto loginDto = new LoginDto(upc.getCaller(), upc.getPasswordAsString(), false);
+            UserDto userDto = authService.login(loginDto);
 
-        if (Objects.nonNull(authService.login(loginDto))) {
-            log.atInfo().log("User {} successfully logged in", userDto.email());
+            if (Objects.isNull(userDto)) {
+                log.atInfo().log("User {} not found", upc.getCaller());
+                return CredentialValidationResult.INVALID_RESULT;
+            }
+
+            log.atInfo().log("User successfully logged in");
             Set<String> roles = Set.of(userDto.role().name());
 
             return new CredentialValidationResult(upc.getCaller(), roles);
         }
-
         return CredentialValidationResult.INVALID_RESULT;
     }
 }

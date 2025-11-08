@@ -1,16 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dev_0x
-  Date: 7/11/25
-  Time: 12:20 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"  %>
+
+<t:layout isPublic="false" isError="false" isLogin="false">
+  <div class="min-h-screen w-full flex flex-col p-6">
+    <h1 class="text-4xl font-bold">Admin home</h1>
+  </div>
+</t:layout>

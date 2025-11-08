@@ -1,11 +1,12 @@
-package com.utec.citasutec.model;
+package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class Professional {
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "professional")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Service> services = new LinkedHashSet<>();
 
 }

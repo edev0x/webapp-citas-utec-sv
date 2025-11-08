@@ -1,0 +1,33 @@
+:root {
+    body {
+        font-family: "Inter", sans-serif;
+        font-weight: normal;
+        line-height: 1.5;
+        background-color: rgb(249 249 249);
+    }
+
+    .navbar-vertical {
+        background-color: #5d0a28;
+        border: none;
+    }
+
+    .navbar-vertical .navbar-nav .nav-item .nav-link.active,
+    .navbar-vertical .navbar-nav .nav-item .nav-link:active{
+        background-color: #f0f0f0;
+        color: #151515;
+    }
+
+    .navbar-vertical .navbar-nav .nav-item .nav-link:hover {
+        background-color: #d3d3d3;
+        color: #151515;
+    }
+
+    .navbar-vertical .navbar-heading {
+        color: #dadada;
+        font-weight: 800;
+    }
+
+    .navbar-vertical .navbar-nav .nav-item .nav-link {
+        color: #c1c1c1;
+    }
+}

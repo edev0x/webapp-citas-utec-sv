@@ -3,4 +3,72 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <display-name>citas-utec</display-name>
+    
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+            <scripting-invalid>false</scripting-invalid>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+            <default-content-type>text/html</default-content-type>
+        </jsp-property-group>
+    </jsp-config>
+
+    <context-param>
+        <param-name>publicPages</param-name>
+        <param-value>/login.jsp,/index.jsp,/signup,/login,/</param-value>
+    </context-param>
+
+    <session-config>
+        <session-timeout>5</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+    
+    <!-- Security config -->
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ESTUDIANTE</role-name>
+    </security-role>
+    <security-role>
+        <role-name>AUDITOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>USUARIO</role-name>
+    </security-role>
+    <security-role>
+        <role-name>PROFESIONAL</role-name>
+    </security-role>
+
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/errors/404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/views/errors/401.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/errors/403.jsp</location>
+    </error-page>
 </web-app>
