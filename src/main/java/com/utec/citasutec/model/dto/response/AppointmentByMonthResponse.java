@@ -1,4 +1,8 @@
 package com.utec.citasutec.model.dto.response;
 
-public class AppointmentByMonthResponse {
+public record AppointmentByMonthResponse(
+    int year,
+    int month,
+    int numberOfAppointments
+) {
 }

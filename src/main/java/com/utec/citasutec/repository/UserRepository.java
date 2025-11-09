@@ -28,4 +28,8 @@ public class UserRepository extends CrudRepository<User> {
     public List<User> findAllWithRoles() {
         return em.createQuery("FROM User u JOIN FETCH u.rol", User.class).getResultList();
     }
+
+    public long countActiveUsers() {
+        return em.createQuery("SELECT COUNT(u) FROM User u WHERE u.isActive = true", Long.class).getSingleResult();
+    }
 }

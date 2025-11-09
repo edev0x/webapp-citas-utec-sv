@@ -1,8 +1,8 @@
 package com.utec.citasutec.service;
 
-import com.utec.citasutec.model.dto.LoginDto;
-import com.utec.citasutec.model.dto.RegisterDto;
-import com.utec.citasutec.model.dto.UserDto;
+import com.utec.citasutec.model.dto.request.LoginDto;
+import com.utec.citasutec.model.dto.request.RegisterDto;
+import com.utec.citasutec.model.dto.response.UserDto;
 import com.utec.citasutec.model.entity.Rol;
 import com.utec.citasutec.model.entity.User;
 import com.utec.citasutec.repository.UserRepository;

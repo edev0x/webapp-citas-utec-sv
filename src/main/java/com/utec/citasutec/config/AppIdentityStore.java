@@ -1,7 +1,7 @@
 package com.utec.citasutec.config;
 
-import com.utec.citasutec.model.dto.LoginDto;
-import com.utec.citasutec.model.dto.UserDto;
+import com.utec.citasutec.model.dto.request.LoginDto;
+import com.utec.citasutec.model.dto.response.UserDto;
 import com.utec.citasutec.service.AuthService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

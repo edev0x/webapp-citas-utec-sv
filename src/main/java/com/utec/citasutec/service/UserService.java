@@ -1,6 +1,6 @@
 package com.utec.citasutec.service;
 
-import com.utec.citasutec.model.dto.UserDto;
+import com.utec.citasutec.model.dto.response.UserDto;
 import com.utec.citasutec.repository.UserRepository;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -22,5 +22,13 @@ public class UserService {
 
     public UserDto findByEmail(String email) {
         return userRepository.findByEmail(email).map(UserDto::fromUser).orElse(null);
+    }
+
+    public long countActiveUsers() {
+        return userRepository.countActiveUsers();
+    }
+
+    public long countAllUsers() {
+        return userRepository.count();
     }
 }

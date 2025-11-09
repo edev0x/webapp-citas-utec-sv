@@ -1,7 +1,7 @@
 package com.utec.citasutec.controller;
 
 import com.google.gson.Gson;
-import com.utec.citasutec.model.dto.UserDto;
+import com.utec.citasutec.model.dto.response.UserDto;
 import com.utec.citasutec.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;

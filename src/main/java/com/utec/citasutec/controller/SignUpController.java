@@ -1,6 +1,6 @@
 package com.utec.citasutec.controller;
 
-import com.utec.citasutec.model.dto.RegisterDto;
+import com.utec.citasutec.model.dto.request.RegisterDto;
 import com.utec.citasutec.service.AuthService;
 import com.utec.citasutec.util.formatters.ConstraintFormatter;
 import com.utec.citasutec.util.validators.ValidationMessages;

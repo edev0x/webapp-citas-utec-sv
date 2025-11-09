@@ -1,4 +1,4 @@
-package com.utec.citasutec.model.dto;
+package com.utec.citasutec.model.dto.response;
 
 import com.utec.citasutec.model.entity.Rol;
 

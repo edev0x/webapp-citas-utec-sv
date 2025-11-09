@@ -1,4 +1,4 @@
-package com.utec.citasutec.model.dto;
+package com.utec.citasutec.model.dto.request;
 
 import com.utec.citasutec.util.validators.ValidationConstants;
 import com.utec.citasutec.util.validators.ValidationMessages;

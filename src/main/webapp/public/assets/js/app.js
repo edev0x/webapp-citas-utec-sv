@@ -1,4 +1,4 @@
-import './authentication';
-import './avatar';
-import './sidebar';
-import './charts';
+import './authentication.js';
+import './avatar.js';
+import './sidebar.js';
+import './charts.js';

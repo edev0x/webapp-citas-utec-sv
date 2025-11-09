@@ -139,7 +139,7 @@
           <!-- Submit Button -->
           <button
               type="submit"
-              class="w-full bg-(--primary) hover:bg-(--primary)/90 text-gray-100 py-3 rounded-lg font-medium transition duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-(--primary)/80"
+              class="w-full bg-primary hover:bg-primary/90 text-gray-100 py-3 rounded-lg font-medium transition duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-primary/80"
           >
             Registrarme
           </button>

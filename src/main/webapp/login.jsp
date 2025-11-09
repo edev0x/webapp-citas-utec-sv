@@ -73,7 +73,7 @@
           <button
               id="loginButton"
               type="submit"
-              class="w-full flex flex-row items-center justify-center bg-(--primary) hover:bg-(--primary)/90 text-gray-100 py-3 rounded-lg font-medium transition duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-(--primary)/80 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full flex flex-row items-center justify-center bg-primary hover:bg-primary/90 text-gray-100 py-3 rounded-lg font-medium transition duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-primary/80 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <i data-feather="log-in" id="login-icon" class="w-5 h-5 mr-2"></i>
             <i data-feather="loader" id="login-spinner" class="hidden animate-spin w-5 h-5 mr-2"></i>

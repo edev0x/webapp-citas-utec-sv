@@ -25,7 +25,6 @@
   <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/simplebar/dist/simplebar.min.css"/>--%>
   <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/theme.min.css"/>--%>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/tailwind.css"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/styleoverride.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone.css"/>
 </head>
@@ -38,7 +37,7 @@
 <!-- mobile overlay -->
 <div class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden" id="overlay"></div>
 
-<main id="main-content" class="@container transition-all duration-300 ease-in-out font-geist ${showSidebar eq true ? 'ml-64' : ''}">
+<main id="main-content" class="@container transition-all duration-300 ease-in-out ${showSidebar eq true ? 'ml-64' : ''}">
   <c:if test="${isPublic eq false}">
     <jsp:include page="/WEB-INF/views/partials/header.jsp"/>
   </c:if>

@@ -1,5 +1,8 @@
 package com.utec.citasutec.util.security;
 
+import jakarta.security.enterprise.SecurityContext;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -20,5 +23,14 @@ public class RedirectUtils {
 
     public static boolean shouldRedirect(String path) {
         return PUBLIC_PAGES.contains(path);
+    }
+
+    public static String determineRedirectPath(HttpServletRequest request, SecurityContext securityContext) {
+        for (Map.Entry<String, String> entry : RedirectUtils.REDIRECT_MAPPING.entrySet()) {
+            if (securityContext.isCallerInRole(entry.getKey())) {
+                return request.getContextPath() + entry.getValue();
+            }
+        }
+        return null;
     }
 }

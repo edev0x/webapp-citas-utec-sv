@@ -1,9 +1,10 @@
 package com.utec.citasutec.controller;
 
-import com.utec.citasutec.model.dto.LoginDto;
+import com.utec.citasutec.model.dto.request.LoginDto;
 import com.utec.citasutec.util.AttributeIdentifiers;
 import com.utec.citasutec.util.formatters.ConstraintFormatter;
 import com.utec.citasutec.util.formatters.Obfuscator;
+import com.utec.citasutec.util.security.RedirectUtils;
 import com.utec.citasutec.util.validators.ValidationMessages;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.AuthenticationStatus;
@@ -77,7 +78,8 @@ public class LoginController extends HttpServlet {
                 }
                 case SUCCESS -> {
                     log.atInfo().log("User {} successfully authenticated", obfuscatedEmail);
-                    resp.sendRedirect(req.getContextPath() + "/app/s/home");
+                    String redirectPath = RedirectUtils.determineRedirectPath(req, securityContext);
+                    resp.sendRedirect(redirectPath != null ? redirectPath : req.getContextPath() + "/");
                 }
                 default -> {
                     log.atWarn().log("Unexpected authentication status: {}", obfuscatedEmail);
