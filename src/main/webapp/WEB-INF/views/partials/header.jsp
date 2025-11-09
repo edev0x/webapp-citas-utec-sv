@@ -3,8 +3,9 @@
   <nav class="max-w-full px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center space-x-6">
-        <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-100 transition">
-          <i data-feather="menu"></i>
+        <button id="sidebar-toggle" class="btn-sm-ghost mr-auto size-7 -ml-1.5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /></svg>
         </button>
       </div>
       <div class="relative">
@@ -25,7 +26,7 @@
             Mi Perfil
           </a>
           <hr class="my-1 border-gray-200">
-          <a href="#" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">
+          <a href="${pageContext.request.contextPath}/logout" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
             </svg>

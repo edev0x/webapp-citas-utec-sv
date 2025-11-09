@@ -2,7 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:layout title="Login | Citas UTEC" isPublic="true" isLogin="true" isError="false">
+<t:layout title="Login | Citas UTEC" isPublic="true" isLogin="true" isError="false" showSidebar="false">
   <div class="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4">
     <div class="w-full max-w-md mx-auto lg:mx-0">
       <div class="bg-white rounded-lg shadow-lg p-8">

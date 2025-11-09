@@ -4,6 +4,7 @@
 <%@ attribute name="isPublic" required="false" type="java.lang.Boolean" %>
 <%@ attribute name="isLogin" required="false" type="java.lang.Boolean" %>
 <%@ attribute name="isError" required="false" type="java.lang.Boolean" %>
+<%@ attribute name="showSidebar" required="false" type="java.lang.Boolean" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,17 +26,19 @@
   <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/theme.min.css"/>--%>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/tailwind.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/styleoverride.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone.css"/>
 </head>
 <body class="bg-gray-50">
 <!-- import sidebar -->
-<c:if test="${isPublic eq false and showSideBar eq true}">
+<c:if test="${isPublic eq false and showSidebar eq true}">
   <jsp:include page="/WEB-INF/views/partials/sidebar.jsp"/>
 </c:if>
 
 <!-- mobile overlay -->
-<div class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden" id="overlay"></div>
+<div class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden" id="overlay"></div>
 
-<main id="main-content" class="@container transition-all duration-300 ease-in-out font-geist">
+<main id="main-content" class="@container transition-all duration-300 ease-in-out font-geist ${showSidebar eq true ? 'ml-64' : ''}">
   <c:if test="${isPublic eq false}">
     <jsp:include page="/WEB-INF/views/partials/header.jsp"/>
   </c:if>
@@ -45,7 +48,12 @@
   <jsp:doBody />
 </main>
 <script src="${pageContext.request.contextPath}/public/assets/libs/feather-icons/dist/feather.min.js"></script>
+<script>
+  feather.replace();
+</script>
 <script src="${pageContext.request.contextPath}/public/assets/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone-min.js"></script>
 <script type="module" src="${pageContext.request.contextPath}/public/assets/js/app.js"></script>
 </body>
 </html>

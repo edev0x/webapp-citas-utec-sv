@@ -1,5 +1,4 @@
-import "./avatar.js";
-import './authentication.js';
-import './sidebar.js';
-
-feather.replace();
+import './authentication';
+import './avatar';
+import './sidebar';
+import './charts';

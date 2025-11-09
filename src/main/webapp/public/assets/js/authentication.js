@@ -16,7 +16,6 @@ const loginForm = document.getElementById(UI_ELEMENTS.LOGIN_FORM_ID);
 const loginButton = document.getElementById(UI_ELEMENTS.LOGIN_BUTTON_ID);
 const loginButtonText = document.getElementById(UI_ELEMENTS.LOGIN_TEXT_ID);
 
-
 function handleFormSubmit(e) {
     if (!e) return;
     e.preventDefault();
@@ -45,6 +44,9 @@ function disableLoginButton() {
     loginButtonText.classList.add("disabled");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    handleFormSubmit(loginForm);
-});
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (loginForm) {
+        loginForm.addEventListener("submit", handleFormSubmit);
+    }
+})

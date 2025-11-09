@@ -15,6 +15,7 @@ import java.io.IOException;
 public class AdminHomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.getRequestDispatcher("/WEB-INF/views/protected/admin/home.jsp").forward(req, resp);
     }
 }
