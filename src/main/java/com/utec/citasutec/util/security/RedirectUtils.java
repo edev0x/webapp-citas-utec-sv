@@ -18,7 +18,8 @@ public class RedirectUtils {
     public static final Map<String, String> REDIRECT_MAPPING = Map.of(
         "ADMIN", "/app/dashboard",
         "PROFESIONAL", "/app/p/home",
-        "ESTUDIANTE", "/app/s/home"
+        "ESTUDIANTE", "/app/s/home",
+        "AUDITOR", "/app/a/home"
     );
 
     public static boolean shouldRedirect(String path) {
@@ -32,5 +33,9 @@ public class RedirectUtils {
             }
         }
         return null;
+    }
+
+    public static boolean isPublicPath(String path) {
+        return PUBLIC_PAGES.contains(path);
     }
 }
