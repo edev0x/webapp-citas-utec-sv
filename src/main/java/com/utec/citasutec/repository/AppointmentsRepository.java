@@ -4,7 +4,6 @@ import com.utec.citasutec.model.dto.response.AppointmentByMonthResponse;
 import com.utec.citasutec.model.dto.response.AppointmentByStateResponse;
 import com.utec.citasutec.model.entity.Appointment;
 import com.utec.citasutec.repository.factory.CrudRepository;
-import jakarta.ejb.EJBTransactionRolledbackException;
 import jakarta.ejb.Stateless;
 import lombok.extern.slf4j.Slf4j;
 

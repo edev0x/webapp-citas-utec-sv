@@ -1,11 +1,13 @@
 package com.utec.citasutec.service;
 
 import com.utec.citasutec.model.dto.response.UserDto;
+import com.utec.citasutec.model.entity.User;
 import com.utec.citasutec.repository.UserRepository;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class UserService {
@@ -30,5 +32,9 @@ public class UserService {
 
     public long countAllUsers() {
         return userRepository.count();
+    }
+
+    public Optional<User> findById(Integer id) {
+        return userRepository.findById(id);
     }
 }

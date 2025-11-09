@@ -1,6 +1,5 @@
 package com.utec.citasutec.controller;
 
-import com.google.gson.Gson;
 import com.utec.citasutec.service.AppointmentService;
 import com.utec.citasutec.service.UserService;
 import com.utec.citasutec.util.AppointmentState;

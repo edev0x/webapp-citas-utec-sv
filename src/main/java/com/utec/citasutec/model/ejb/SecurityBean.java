@@ -1,6 +1,5 @@
 package com.utec.citasutec.model.ejb;
 
-import com.utec.citasutec.service.RoleService;
 import com.utec.citasutec.service.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

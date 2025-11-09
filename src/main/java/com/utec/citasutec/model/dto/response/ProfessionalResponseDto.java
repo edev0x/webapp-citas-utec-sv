@@ -1,7 +1,6 @@
 package com.utec.citasutec.model.dto.response;
 
 import com.utec.citasutec.model.entity.Professional;
-import lombok.Builder;
 
 public record ProfessionalResponseDto(
     Integer id,
