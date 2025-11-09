@@ -15,15 +15,15 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(UserDto::fromUser).toList();
+        return userRepository.findAll().stream().map(UserDto::fromEntity).toList();
     }
 
     public List<UserDto> findAllWithRoles() {
-        return userRepository.findAllWithRoles().stream().map(UserDto::fromUser).toList();
+        return userRepository.findAllWithRoles().stream().map(UserDto::fromEntity).toList();
     }
 
     public UserDto findByEmail(String email) {
-        return userRepository.findByEmail(email).map(UserDto::fromUser).orElse(null);
+        return userRepository.findByEmail(email).map(UserDto::fromEntity).orElse(null);
     }
 
     public long countActiveUsers() {

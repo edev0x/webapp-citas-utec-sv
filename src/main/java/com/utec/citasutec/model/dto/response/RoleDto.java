@@ -8,7 +8,7 @@ public record RoleDto(
     Integer id,
     String name
 ) {
-    public static RoleDto fromRole(Rol rol) {
+    public static RoleDto fromEntity(Rol rol) {
         if (Objects.isNull(rol)) return null;
 
         return new RoleDto(rol.getId().intValue(), rol.getName());

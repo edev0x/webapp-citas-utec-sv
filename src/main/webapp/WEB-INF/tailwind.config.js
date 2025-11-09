@@ -2,12 +2,7 @@ module.exports = {
   content: [],
   darkMode: "class",
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['var(--font-geist)'],
-        mono: ['var(--font-geist-mono)']
-      }
-    },
+    
   },
   variants: {
     extend: {},

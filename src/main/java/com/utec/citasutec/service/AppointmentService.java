@@ -1,11 +1,13 @@
 package com.utec.citasutec.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.utec.citasutec.model.dto.request.AppointmentRequestDto;
 import com.utec.citasutec.model.dto.response.AppointmentByMonthResponse;
 import com.utec.citasutec.model.dto.response.AppointmentByStateResponse;
+import com.utec.citasutec.model.dto.response.AppointmentResponse;
 import com.utec.citasutec.model.entity.Appointment;
 import com.utec.citasutec.model.entity.Professional;
 import com.utec.citasutec.model.entity.User;
@@ -64,6 +66,24 @@ public class AppointmentService {
             appointmentsRepository.save(appointment);
             log.atInfo().log("Appointment created successfully for user ID: {} with professional ID: {}",
                     appointmentRequestDto.userId(), appointmentRequestDto.professionalId());
+        }
+    }
+
+    public List<AppointmentResponse> findAllAppointments() {
+        try {
+            return appointmentsRepository.findAllAppointments();
+        } catch (Exception e) {
+            log.atError().log("Error retrieving all appointments: {}", e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    public List<AppointmentResponse> findAllUpcomingAppointments() {
+        try {
+            return appointmentsRepository.findAllUpcomingAppointments();
+        } catch (Exception e) {
+            log.atError().log("Error retrieving upcoming appointments: {}", e.getMessage());
+            return new ArrayList<>();
         }
     }
 }

@@ -20,6 +20,11 @@
           <span>Dashboard</span>
         </a>
 
+        <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/home') ? 'bg-gray-800 font-medium' : ''}">
+          <i data-feather="calendar" class="w-5 h-5 flex-shrink-0"></i>
+          <span>Calendario</span>
+        </a>
+
         <!-- Administrar  -->
         <div class="menu-item">
           <button class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition w-full menu-parent">

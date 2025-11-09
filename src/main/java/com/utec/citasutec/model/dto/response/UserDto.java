@@ -10,14 +10,14 @@ public record UserDto(
     Boolean isActive,
     RoleDto role
 ) {
-    public static UserDto fromUser(User user) {
+    public static UserDto fromEntity(User user) {
         return new UserDto(
             user.getId(),
             user.getFirstName(),
             user.getLastName(),
             user.getEmail(),
             user.getIsActive(),
-            RoleDto.fromRole(user.getRol())
+            RoleDto.fromEntity(user.getRol())
         );
     }
 

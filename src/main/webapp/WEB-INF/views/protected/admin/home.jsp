@@ -1,4 +1,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="dateUtils" uri="http://utec.edu/jsp/tlds/dateUtils" %>
 
 <t:layout isPublic="false" isError="false" isLogin="false" showSidebar="true">
   <div class="min-h-screen w-full flex flex-col p-6 overflow-hidden">
@@ -21,7 +24,7 @@
               </div>
             </div>
   
-            <!-- Appointments metric -->
+            <!-- Appointments metrics -->
             <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
               <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
                 <i data-feather="calendar" class="w-6 h-6 text-gray-800 dark:text-white/90"></i>
@@ -90,6 +93,75 @@
             </div>
           </div>
         </div>
+        <div class="col-span-12 xl:col-span-12">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+            <div class="mb-6 flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                Pr&oacute;ximas Citas
+              </h3>
+            </div>
+            <div class="max-w-full overflow-x-auto">
+              <!-- Appointments's table -->
+              <div class="flex flex-col gap-2">
+                <c:if test="${not empty upcomingAppointments}">
+                  <c:forEach var="appointment" items="${upcomingAppointments}">
+                    <div class="flex cursor-pointer items-center gap-4 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-white/[0.03]">
+                      <div class="flex items-start gap-3 min-w-[200px]">
+                        <div
+                            class="flex h-5 w-5 items-center justify-center rounded-md border-[1.25px] bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700"
+                            :class="checked ? 'border-brand-500 dark:border-brand-500 bg-brand-500' : 'bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700'">
+                          <svg :class="checked ? 'block' : 'hidden'" width="14" height="14" viewBox="0 0 14 14"
+                               fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.6668 3.5L5.25016 9.91667L2.3335 7" stroke="white" stroke-width="1.94437"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <span class="mb-0.5 block text-xs text-gray-500 dark:text-gray-400">
+                              ${dateUtils:formatLocalDate(appointment.appointmentDate())}
+                          </span>
+                          <span class="text-sm font-bold text-gray-700 dark:text-gray-400">
+                              ${dateUtils:formatTime(appointment.appointmentTime())}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="flex-1 min-w-[200px]">
+                        <span class="mb-1 block text-xs font-medium text-gray-700">Profesional asignado:</span>
+                        <span class="text-sm text-gray-500">${appointment.professional().fullName()}</span>
+                      </div>
+
+                      <c:set var="state" value="${appointment.state().replace('_',' ')}"/>
+                      <div class="ml-auto">
+                        <c:choose>
+                          <c:when test="${state == 'PENDIENTE'}">
+                              <span
+                                  class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">${state}</span>
+                          </c:when>
+                          <c:when test="${state == 'CONFIRMADA' or state == 'COMPLETADA'}">
+                              <span
+                                  class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">${state}</span>
+                          </c:when>
+                          <c:when test="${state == 'EN ATENCION' or state == 'REAGENDADA'}">
+                              <span
+                                  class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 inset-ring inset-ring-yellow-600/20">${state}</span>
+                          </c:when>
+                          <c:otherwise>
+                              <span
+                                  class="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 inset-ring inset-ring-pink-700/10">${state}</span>
+                          </c:otherwise>
+                        </c:choose>
+                      </div>
+                    </div>
+                  </c:forEach>
+                </c:if>
+                <c:if test="${empty upcomingAppointments}">
+                  <p class="text-gray-500 dark:text-gray-400 text-center font-semibold">No hay citas
+                    pr&oacute;ximas.</p>
+                </c:if>
+              </div>
+          </div>
       </div>
     </div>
 </t:layout>

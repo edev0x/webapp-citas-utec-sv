@@ -32,7 +32,7 @@ public class AuthService {;
             return null;
         }
 
-        return UserDto.fromUser(user);
+        return UserDto.fromEntity(user);
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
