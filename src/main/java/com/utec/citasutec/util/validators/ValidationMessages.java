@@ -13,4 +13,5 @@ public interface ValidationMessages {
    String USER_ID_REQUIRED = "El identificador del estudiante es obligatorio";
    String PROFESSIONAL_ID_REQUIRED = "El identificador del profesional es obligatorio";
    String INVALID_APPOINTMENT_STATE = "El estado del cita es invalido. Debe proveer uno de los siguientes valores: ";
+   String USER_ALREADY_EXISTS = "Este usuario ya existe en el sistema.";
 }

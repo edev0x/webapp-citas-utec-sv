@@ -86,10 +86,16 @@
               </h3>
             </div>
             <div class="h-full">
-              <div id="appointments-bystate-chart"
-                class="h-full w-full flex items-center justify-center pl-2 xl:min-w-full"
-                style="min-height:300px; height:100%;">
-              </div>
+              <c:if test="${not empty appointmentsByStatus}">
+                <div id="chart-2" class="h-full mt-4" style="min-height: 300px;"></div>
+              </c:if>
+              <c:if test="${empty appointmentsByStatus}">
+                <div class="flex items-center justify-center h-full">
+                  <p class="text-gray-500 dark:text-gray-400 font-semibold">
+                    No hay datos disponibles.
+                  </p>
+                </div>
+              </c:if>
             </div>
           </div>
         </div>
@@ -102,7 +108,7 @@
             </div>
             <div class="max-w-full overflow-x-auto">
               <!-- Appointments's table -->
-              <div class="flex flex-col gap-2">
+              <div class="flex flex-col gap-2 ${not empty upcomingAppointments ? '': 'justify-center'}" style="min-height: 300px;">
                 <c:if test="${not empty upcomingAppointments}">
                   <c:forEach var="appointment" items="${upcomingAppointments}">
                     <div class="flex cursor-pointer items-center gap-4 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-white/[0.03]">
@@ -157,8 +163,9 @@
                   </c:forEach>
                 </c:if>
                 <c:if test="${empty upcomingAppointments}">
-                  <p class="text-gray-500 dark:text-gray-400 text-center font-semibold">No hay citas
-                    pr&oacute;ximas.</p>
+                  <p class="text-gray-500 dark:text-gray-400 font-semibold text-center w-full h-full flex items-center justify-center">
+                      No hay citas pr&oacute;ximas programadas.
+                  </p>
                 </c:if>
               </div>
           </div>

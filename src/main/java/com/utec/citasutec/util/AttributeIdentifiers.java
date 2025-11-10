@@ -8,4 +8,5 @@ public interface AttributeIdentifiers {
     String EMAIL_INPUT = "email";
     String PASSWORD_INPUT = "password";
     String VALIDATION_ERRORS = "validationErrors";
+    String RESOURCE_EXISTS = "resourceExists";
 }

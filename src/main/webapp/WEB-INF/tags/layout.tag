@@ -55,5 +55,6 @@
 <script src="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone-min.js"></script>
 <script type="module" src="${pageContext.request.contextPath}/public/assets/js/app.js"></script>
+<div id="toaster" class="toaster"></div>
 </body>
 </html>

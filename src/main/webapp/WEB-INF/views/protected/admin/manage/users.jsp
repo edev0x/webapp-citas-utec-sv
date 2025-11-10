@@ -29,8 +29,7 @@
                       <input id="search-term" type="text" placeholder="Search..." class="dark:bg-dark-900 shadow-theme-xs focus:border-gray-100 focus:ring-gray-100/10 dark:focus:border-brand-800 h-10 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-4 pl-[42px] text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden xl:w-[300px] dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" name="search-term" value="${param.searchTerm != null ? param.searchTerm : ''}" />
                     </div>
                   </form>
-
-                    <div id="uf-select" class="select">
+                  <div id="uf-select" class="select">
                       <button
                         type="button"
                         id="uf-select-trigger"
@@ -72,6 +71,12 @@
 
                       <input type="hidden" name="uf-select-value" value="firstName" />
                     </div>
+                    <div>
+                      <button type="button" class="btn-secondary inline-flex items-center px-4 py-2 rounded-md text-sm font-medium"  onclick="document.getElementById('uf-create-user-dialog').showModal()" >
+                        <i data-feather="plus" class="inline-block w-4 h-4 mr-2"></i>
+                        Agregar
+                      </button>
+                    </div>
                 </div>
               </div>
               <div class="max-w-full overflow-x-auto custom-scrollbar">
@@ -110,7 +115,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     <c:forEach var="user" items="${usersList}">
-                      <tr class="hover:bg-gray-50 dark:hover:bg-white/[0.03] cursor-pointer">
+                      <tr class="hover:bg-gray-50 dark:hover:bg-white/3 cursor-pointer">
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center justify-center">
                               <span class="text-sm text-gray-700 dark:text-gray-400">
@@ -161,27 +166,17 @@
                           </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center justify-center">
+                          <div class="flex items-center justify-center gap-1">
                             <a href="${pageContext.request.contextPath}/app/manage/users?action=delete&resource=user&id=${user.id()}"
                                class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                               <i data-feather="trash-2" class="inline-block w-4 h-4 mr-1"></i>
                             </a>
+                            <a href="${pageContext.request.contextPath}/app/manage/users?action=edit&resource=user&id=${user.id()}"
+                                class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-primary px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
+                                <i data-feather="edit-3" class="inline-block w-4 h-4 mr-1"></i>
+                            </a>
                           </div>
                         </td>
-                          <%--  <td class="px-6 py-4 whitespace-nowrap">
-                             <div class="flex items-center justify-center">
-                               <span class="text-sm text-gray-700 dark:text-gray-400">
-                                 <fmt:formatDate value="${user.createdAt}" pattern="dd/MM/yyyy HH:mm" />
-                               </span>
-                             </div>
-                           </td>
-                           <td class="px-6 py-4 whitespace-nowrap">
-                             <div class="flex items-center justify-center">
-                               <span class="text-sm text-gray-700 dark:text-gray-400">
-                                 <fmt:formatDate value="${user.updatedAt}" pattern="dd/MM/yyyy HH:mm" />
-                               </span>
-                             </div>
-                           </td> --%>
                       </tr>
                     </c:forEach>
                     </tbody>
@@ -194,4 +189,97 @@
       </div>
     </div>
   </div>
+
+  <dialog id="uf-create-user-dialog" class="dialog" aria-labelledby="uf-create-user-dialog-title"
+                aria-describedby="uf-create-user-dialog-description">
+            <article>
+                <header>
+                    <h2 id="alert-dialog-title">Crear nuevo usuario</h2>
+                    <p id="alert-dialog-description">
+                        Complete el formulario a continuación para crear un nuevo usuario.
+                    </p>
+                </header>
+                <form action="${pageContext.request.contextPath}/app/user" method="post" id="createUserForm">
+                    <div class="flex flex-col gap-2">
+                        <div class="grid grid-cols-2 gap-2 mb-4 gap-y-4 gap-x-4">
+                            <div class="space-y-2">
+                              <label for="firstName" class="label required">Nombre:</label>
+                              <input type="text" id="firstName" name="firstName" class="input" placeholder="Ingrese el nombre" required />
+                              <p class="text-sm text-red-600 mt-1 hidden" id="firstNameError"></p>
+                            </div>
+                            <div class="space-y-2">
+                              <label for="lastName" class="label required">Apellido:</label>
+                              <input type="text" id="lastName" name="lastName" class="input" placeholder="Ingrese el apellido" required />
+                              <p class="text-sm text-red-600 mt-1 hidden" id="lastNameError"></p>
+                            </div>
+                        </div>
+                        <div class="grid gap-2 mb-4">
+                            <label for="email" class="label required">Email:</label>
+                            <input type="email" id="email" name="email" class="input" placeholder="usuario@utec.edu.sv" required />
+                            <p class="text-sm text-red-600 mt-1 hidden" id="emailError"></p>
+                        </div>
+                        <div class="grid gap-2 mb-4 col-span-2">
+                            <label for="roleId" class="label required">Rol:</label>
+                            <div id="role-select" class="select">
+                              <button
+                                type="button"
+                                id="role-select-trigger"
+                                class="btn-outline justify-between font-normal w-full"
+                                aria-haspopup="listbox"
+                                aria-expanded="false"
+                                aria-controls="role-select-listbox">
+                                <span class="flex items-center gap-2">
+                                  <i data-feather="user-check" class="w-4 h-4"></i>
+                                  <span class="truncate">Seleccione un rol</span>
+                                </span>
+                              </button>
+                              <div id="role-select-popover" data-popover aria-hidden="true">
+                                <div role="listbox" id="role-select-listbox" aria-orientation="vertical" aria-labelledby="role-select-trigger">
+                                  <c:forEach var="role" items="${roles}">
+                                    <div role="option" id="role-select-item-${role.id()}" data-value="${role.id()}">
+                                      ${role.name()}
+                                    </div>
+                                  </c:forEach>
+                                </div>
+                              </div>
+                              <input type="hidden" name="roleId" id="roleId" value="" />
+                            </div>
+                            <p class="text-sm text-red-600 mt-1 hidden" id="roleError"></p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <div class="space-y-2">
+                              <label for="password" class="label required">Contraseña temporal:</label>
+                              <div class="relative">
+                                <input type="password" id="password" name="password" class="input pr-10"
+                                  placeholder="Ingrese una contraseña temporal" required />
+                                <button type="button" id="togglePasswordVisibilityButton"
+                                  class="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                  <i data-feather="eye" id="eyeOnIcon" class="w-5 h-5"></i>
+                                  <i data-feather="eye-off" id="eyeOffIcon" class="w-5 h-5 hidden"></i>
+                                </button>
+                              </div>
+                              <p class="text-sm text-red-600 mt-1 hidden" id="passwordError"></p>
+                            </div>
+                            <div class="space-y-2 flex items-center justify-center mt-6">
+                              <label class="label">
+                                <input type="checkbox" name="isActive" role="switch" class="input" id="isActive" />
+                                Habilitar acceso
+                              </label>
+                            </div>
+                        </div>
+                        <p class="text-sm text-red-600 mt-1 hidden" id="generalError"></p>
+                        <input type="hidden" name="action" id="action" value="create" />
+                        <input type="hidden" name="resource" id="resource" value="user" />
+                    </div>
+
+                    <footer class="flex justify-end gap-2">
+                        <button type="button" class="btn-secondary" id="cancelButton">Cancelar</button>
+                        <button type="submit" class="btn-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="status" aria-label="Loading" class="animate-spin w-5 h-5 hidden"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+                          Guardar
+                        </button>
+                    </footer>
+                </form>
+            </article>
+  </dialog>
 </t:layout>

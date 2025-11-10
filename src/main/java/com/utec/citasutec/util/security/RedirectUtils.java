@@ -30,7 +30,8 @@ public class RedirectUtils {
             ResourceConstants.STUDENTS, "/WEB-INF/views/protected/admin/manage/students.jsp",
             ResourceConstants.APPOINTMENTS, "/WEB-INF/views/protected/admin/manage/appointments.jsp",
             ResourceConstants.AUDITS, "/WEB-INF/views/protected/admin/manage/audits.jsp",
-            ResourceConstants.ROLES, "/WEB-INF/views/protected/admin/manage/roles.jsp"
+            ResourceConstants.ROLES, "/WEB-INF/views/protected/admin/manage/roles.jsp",
+            ResourceConstants.SERVICES, "/WEB-INF/views/protected/admin/manage/services.jsp"
     );
 
     public static boolean shouldRedirect(String path) {

@@ -79,4 +79,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
+    @PrePersist
+    private void prePersist() {
+        this.createdAt = Instant.now();
+    }
 }
