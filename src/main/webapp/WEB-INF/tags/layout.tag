@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/tailwind.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone.css"/>
+
+  <!-- Basecoat CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.3/dist/js/all.min.js" defer></script>
 </head>
 <body class="bg-gray-50 font-(family-name:--font-outfit)">
 <!-- import sidebar -->

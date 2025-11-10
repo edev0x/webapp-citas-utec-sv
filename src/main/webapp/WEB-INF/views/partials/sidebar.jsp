@@ -37,16 +37,16 @@
             </svg>
           </button>
           <div class="submenu hidden ml-8 mt-2 space-y-1">
-            <a href="${pageContext.request.contextPath}/app/manage/users" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/users') ? 'bg-gray-800 font-medium' : ''} ">
+            <a href="${pageContext.request.contextPath}/app/manage?resource=users" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/users') ? 'bg-gray-800 font-medium' : ''} ">
               <span>Usuarios</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage/roles" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
+            <a href="${pageContext.request.contextPath}/app/manage?resource=roles" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
               <span>Roles</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage/services" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/services') ? 'bg-gray-800 font-medium' : ''}">
+            <a href="${pageContext.request.contextPath}/app/manage?resource=services" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/services') ? 'bg-gray-800 font-medium' : ''}">
               <span>Servicios</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage/professionals" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/categories') ? 'bg-gray-800 font-medium' : ''}">
+            <a href="${pageContext.request.contextPath}/app/manage?resource=professionals" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/professionals') ? 'bg-gray-800 font-medium' : ''}">
               <span>Profesionales</span>
             </a>
           </div>

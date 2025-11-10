@@ -1,6 +1,5 @@
 package com.utec.citasutec.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +11,8 @@ import com.utec.citasutec.model.entity.Appointment;
 import com.utec.citasutec.model.entity.Professional;
 import com.utec.citasutec.model.entity.User;
 import com.utec.citasutec.repository.AppointmentsRepository;
+import com.utec.citasutec.repository.factory.Paginated;
+import com.utec.citasutec.util.exceptions.AppServiceTxException;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -74,7 +75,7 @@ public class AppointmentService {
             return appointmentsRepository.findAllAppointments();
         } catch (Exception e) {
             log.atError().log("Error retrieving all appointments: {}", e.getMessage());
-            return new ArrayList<>();
+            throw new AppServiceTxException("Error retrieving all appointments");
         }
     }
 
@@ -83,7 +84,25 @@ public class AppointmentService {
             return appointmentsRepository.findAllUpcomingAppointments();
         } catch (Exception e) {
             log.atError().log("Error retrieving upcoming appointments: {}", e.getMessage());
-            return new ArrayList<>();
+            throw new AppServiceTxException("Error retrieving upcoming appointments");
+        }
+    }
+
+    public Paginated<AppointmentResponse> findAllAppointmentsPaginated(int page, int size, String searchField,
+            String searchTerm) {
+        try {
+            Paginated<Appointment> paginatedAppointments = appointmentsRepository.getPageable(page, size, searchField,
+                    searchTerm);
+
+            List<AppointmentResponse> appointmentResponses = paginatedAppointments.getItems().stream()
+                    .map(AppointmentResponse::fromEntity)
+                    .toList();
+            return new Paginated<>(appointmentResponses, paginatedAppointments.getTotalItems(),
+                    paginatedAppointments.getCurrentPage(),
+                    paginatedAppointments.getPageSize(), paginatedAppointments.getTotalPages());
+        } catch (Exception e) {
+            log.atError().log("Error retrieving paginated appointments: {}", e.getMessage());
+            throw new AppServiceTxException("Error retrieving paginated appointments");
         }
     }
 }

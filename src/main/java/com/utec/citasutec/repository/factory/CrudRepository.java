@@ -2,6 +2,7 @@ package com.utec.citasutec.repository.factory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 import java.util.Objects;
@@ -53,4 +54,27 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
     public long count() {
         return em.createQuery("SELECT COUNT(e) FROM " + entityClass.getName() + " e", Long.class).getSingleResult();
     }
+
+    public Paginated<T> getPageable(int page, int size, String searchField, String searchTerm) {
+        String baseQuery = "FROM " + entityClass.getName() + " e";
+
+        if (Objects.nonNull(searchField) && !searchField.isEmpty() 
+                && Objects.nonNull(searchTerm) && !searchTerm.isEmpty()) {
+            baseQuery += " WHERE e." + searchField + " LIKE :searchTerm";
+        }
+
+        TypedQuery<T> query = em.createQuery(baseQuery, entityClass)
+                .setFirstResult((page - 1) * size)
+                .setMaxResults(size);
+        
+        if (baseQuery.contains(":searchTerm")) {
+            query.setParameter("searchTerm", "%" + searchTerm + "%");
+        }
+
+        List<T> items = query.getResultList();
+        long totalItems = count();
+        int totalPages = (int) Math.ceil((double) totalItems / size);
+        return new Paginated<>(items, totalItems, page, size, totalPages);
+    }
+
 }

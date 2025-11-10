@@ -11,4 +11,5 @@ public interface ICrudRepository<T> {
     boolean exists(Integer id);
     long count();
     Optional<T> findById(Integer id);
+    Paginated<T> getPageable(int page, int size, String searchField, String searchTerm);
 }

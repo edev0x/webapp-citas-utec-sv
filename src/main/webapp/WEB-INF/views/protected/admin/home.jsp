@@ -133,26 +133,26 @@
                       </div>
 
                       <c:set var="state" value="${appointment.state().replace('_',' ')}"/>
-                      <div class="ml-auto">
-                        <c:choose>
-                          <c:when test="${state == 'PENDIENTE'}">
-                              <span
-                                  class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">${state}</span>
-                          </c:when>
-                          <c:when test="${state == 'CONFIRMADA' or state == 'COMPLETADA'}">
-                              <span
-                                  class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">${state}</span>
-                          </c:when>
-                          <c:when test="${state == 'EN ATENCION' or state == 'REAGENDADA'}">
-                              <span
-                                  class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 inset-ring inset-ring-yellow-600/20">${state}</span>
-                          </c:when>
-                          <c:otherwise>
-                              <span
-                                  class="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 inset-ring inset-ring-pink-700/10">${state}</span>
-                          </c:otherwise>
-                        </c:choose>
-                      </div>
+                        <div class="ml-auto">
+                          <c:choose>
+                            <c:when test="${state == 'PENDIENTE'}">
+                                <span
+                                    class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">${state}</span>
+                            </c:when>
+                            <c:when test="${state == 'CONFIRMADA' or state == 'COMPLETADA'}">
+                                <span
+                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">${state}</span>
+                            </c:when>
+                            <c:when test="${state == 'EN ATENCION' or state == 'REAGENDADA'}">
+                                <span
+                                    class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 inset-ring inset-ring-yellow-600/20">${state}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span
+                                    class="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 inset-ring inset-ring-pink-700/10">${state}</span>
+                            </c:otherwise>
+                          </c:choose>
+                        </div>
                     </div>
                   </c:forEach>
                 </c:if>
