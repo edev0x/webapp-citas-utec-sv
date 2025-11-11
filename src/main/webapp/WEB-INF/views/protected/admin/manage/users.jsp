@@ -26,14 +26,14 @@
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M3.04199 9.37381C3.04199 5.87712 5.87735 3.04218 9.37533 3.04218C12.8733 3.04218 15.7087 5.87712 15.7087 9.37381C15.7087 12.8705 12.8733 15.7055 9.37533 15.7055C5.87735 15.7055 3.04199 12.8705 3.04199 9.37381ZM9.37533 1.54218C5.04926 1.54218 1.54199 5.04835 1.54199 9.37381C1.54199 13.6993 5.04926 17.2055 9.37533 17.2055C11.2676 17.2055 13.0032 16.5346 14.3572 15.4178L17.1773 18.2381C17.4702 18.531 17.945 18.5311 18.2379 18.2382C18.5308 17.9453 18.5309 17.4704 18.238 17.1775L15.4182 14.3575C16.5367 13.0035 17.2087 11.2671 17.2087 9.37381C17.2087 5.04835 13.7014 1.54218 9.37533 1.54218Z" fill=""></path>
                         </svg>
                       </span>
-                      <input id="search-term" type="text" placeholder="Search..." class="dark:bg-dark-900 shadow-theme-xs focus:border-gray-100 focus:ring-gray-100/10 dark:focus:border-brand-800 h-10 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-4 pl-[42px] text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden xl:w-[300px] dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" name="search-term" value="${param.searchTerm != null ? param.searchTerm : ''}" />
+                      <input id="search-term" type="text" placeholder="Buscar..." class="dark:bg-dark-900 shadow-theme-xs focus:border-gray-100 focus:ring-gray-100/10 dark:focus:border-brand-800 h-10 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-4 pl-[42px] text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden xl:w-[300px] dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" name="search-term" value="${param.searchTerm != null ? param.searchTerm : ''}" />
                     </div>
                   </form>
                   <div id="uf-select" class="select">
                       <button
                         type="button"
                         id="uf-select-trigger"
-                        class="btn-outline justify-between font-normal w-full"
+                        class="btn-outline justify-between font-normal w-full hidden"
                         aria-haspopup="listbox"
                         aria-expanded="false"
                         aria-controls="uf-select-listbox">
@@ -47,7 +47,7 @@
                         </svg>
                       </button>
 
-                      <div id="uf-select-popover" data-popover aria-hidden="true" class="border-gray-100">
+                      <div id="uf-select-popover" data-popover aria-hidden="true" class="border-gray-100 hidden">
                         <div role="listbox" id="uf-select-listbox" aria-orientation="vertical" aria-labelledby="uf-select-trigger">
                           <div role="group" aria-labelledby="uf-group-label-select-items-1">
                             <div role="heading" id="uf-group-label-select-items-1">
@@ -115,7 +115,14 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     <c:forEach var="user" items="${usersList}">
-                      <tr class="hover:bg-gray-50 dark:hover:bg-white/3 cursor-pointer">
+                      <tr class="hover:bg-gray-50 dark:hover:bg-white/3 cursor-pointer"
+                          data-id="${user.id()}"
+                          data-firstName="${user.firstName()}"
+                          data-lastName="${user.lastName()}"
+                          data-email="${user.email()}"
+                          data-roleId="${user.role().id()}"
+                          data-isActive="${user.isActive()}"
+                      >
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center justify-center">
                               <span class="text-sm text-gray-700 dark:text-gray-400">
@@ -167,12 +174,11 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center justify-center gap-1">
-                            <a href="${pageContext.request.contextPath}/app/manage/users?action=delete&resource=user&id=${user.id()}"
+                            <a href="#" onclick="document.getElementById('deleteUserId').value='${user.id()}'; document.getElementById('uf-delete-user-dialog').showModal(); return false;"
                                class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                               <i data-feather="trash-2" class="inline-block w-4 h-4 mr-1"></i>
                             </a>
-                            <a href="${pageContext.request.contextPath}/app/manage/users?action=edit&resource=user&id=${user.id()}"
-                                class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-primary px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
+                            <a href="#" id="edit-user-trigger" class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-primary px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                                 <i data-feather="edit-3" class="inline-block w-4 h-4 mr-1"></i>
                             </a>
                           </div>
@@ -275,11 +281,14 @@
                     <footer class="flex justify-end gap-2">
                         <button type="button" class="btn-secondary" id="cancelButton">Cancelar</button>
                         <button type="submit" class="btn-primary">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="status" aria-label="Loading" class="animate-spin w-5 h-5 hidden"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+                          <svg id="save-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="status" aria-label="Loading" class="animate-spin w-5 h-5 hidden"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
                           Guardar
                         </button>
                     </footer>
                 </form>
             </article>
   </dialog>
+
+  <jsp:include page="/WEB-INF/views/partials/admin/delete-user-dialog.jsp" />
+  <jsp:include page="/WEB-INF/views/partials/admin/edit-user-dialog.jsp" />
 </t:layout>

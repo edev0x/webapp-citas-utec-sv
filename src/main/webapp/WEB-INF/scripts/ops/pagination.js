@@ -1,8 +1,12 @@
-function handleSearch() {
+export const handleSearch = () => {
     const selectComponent = document.querySelector("#uf-select");
     const searchInput = document.querySelector("#search-term");
     const form = document.querySelector("#uf-search-form");
     const filterField = document.querySelector("#uf-filter-field");
+
+    if (!selectComponent || !searchInput || !form || !filterField) {
+        return;
+    }
 
     selectComponent.addEventListener("change", function (event) {
         const selectedValue = event.target.value;
@@ -31,4 +35,4 @@ function handleSearch() {
     });
 }
 
-export default handleSearch;
+document.addEventListener("DOMContentLoaded", handleSearch);

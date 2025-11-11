@@ -2,7 +2,7 @@ package com.utec.citasutec.service;
 
 import com.utec.citasutec.model.dto.request.LoginDto;
 import com.utec.citasutec.model.dto.request.RegisterDto;
-import com.utec.citasutec.model.dto.response.UserDto;
+import com.utec.citasutec.model.dto.response.UserResponseDto;
 import com.utec.citasutec.model.entity.Rol;
 import com.utec.citasutec.model.entity.User;
 import com.utec.citasutec.repository.UserRepository;
@@ -26,13 +26,13 @@ public class AuthService {;
     @Inject
     private RoleService roleService;
 
-    public UserDto login(LoginDto credentials) {
+    public UserResponseDto login(LoginDto credentials) {
         User user = userRepository.findByEmail(credentials.email()).orElse(null);
         if (Objects.isNull(user) || !isValidCredentials(credentials.password(), user.getPasswordHash())) {
             return null;
         }
 
-        return UserDto.fromEntity(user);
+        return UserResponseDto.fromEntity(user);
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

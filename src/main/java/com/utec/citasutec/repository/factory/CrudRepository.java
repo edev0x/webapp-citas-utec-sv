@@ -36,7 +36,7 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
     }
 
     public void delete(T entity) {
-       em.remove(entity);
+        em.remove(entity);
     }
 
     public void deleteById(Integer id) {
@@ -56,19 +56,32 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
     }
 
     public Paginated<T> getPageable(int page, int size, String searchField, String searchTerm) {
+        if (page < 1 || size < 1) {
+            throw new IllegalArgumentException("Page and size must be a positive number.");
+        }
+
         String baseQuery = "FROM " + entityClass.getName() + " e";
+        String countQuery = "SELECT COUNT(e) FROM " + entityClass.getName() + " e";
 
         if (Objects.nonNull(searchField) && !searchField.isEmpty() 
                 && Objects.nonNull(searchTerm) && !searchTerm.isEmpty()) {
-            baseQuery += " WHERE e." + searchField + " LIKE :searchTerm";
+            String whereClause = " WHERE e." + searchField + " LIKE :searchTerm";
+            baseQuery += whereClause;
+            countQuery += whereClause;
         }
+
+        baseQuery += " ORDER BY e.id ASC";
+        countQuery += " ORDER BY e.id ASC";
 
         TypedQuery<T> query = em.createQuery(baseQuery, entityClass)
                 .setFirstResult((page - 1) * size)
                 .setMaxResults(size);
+        TypedQuery<Long> countQueryObject = em.createQuery(countQuery, Long.class);
         
         if (baseQuery.contains(":searchTerm")) {
-            query.setParameter("searchTerm", "%" + searchTerm + "%");
+            String searchPattern = "%" + searchTerm + "%";
+            query.setParameter("searchTerm", searchPattern);
+            countQueryObject.setParameter("searchTerm", searchPattern);
         }
 
         List<T> items = query.getResultList();
@@ -76,5 +89,4 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
         int totalPages = (int) Math.ceil((double) totalItems / size);
         return new Paginated<>(items, totalItems, page, size, totalPages);
     }
-
 }

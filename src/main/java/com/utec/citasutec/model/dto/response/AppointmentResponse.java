@@ -12,7 +12,7 @@ public record AppointmentResponse(
         LocalTime appointmentTime,
         LocalTime endTime,
         String state,
-        UserDto user,
+        UserResponseDto user,
         ProfessionalResponseDto professional,
         Instant createdAt) {
 
@@ -23,7 +23,7 @@ public record AppointmentResponse(
                 appointment.getStartTime(),
                 appointment.getEndTime(),
                 appointment.getState(),
-                UserDto.fromEntity(appointment.getUser()),
+                UserResponseDto.fromEntity(appointment.getUser()),
                 ProfessionalResponseDto.fromEntity(appointment.getProfessional()),
                 appointment.getCreationDate()
         );

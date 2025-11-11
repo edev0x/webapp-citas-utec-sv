@@ -14,4 +14,10 @@ public interface ValidationMessages {
    String PROFESSIONAL_ID_REQUIRED = "El identificador del profesional es obligatorio";
    String INVALID_APPOINTMENT_STATE = "El estado del cita es invalido. Debe proveer uno de los siguientes valores: ";
    String USER_ALREADY_EXISTS = "Este usuario ya existe en el sistema.";
+   String USER_NOT_FOUND = "Usuario no encontrado.";
+   String SUCCESSFUL_OPERATION = "Operación completada exitosamente.";
+   String USER_REQUIRED = "El usuario es obligatorio para esta operaci&oacute;n.";
+   String CANNOT_DELETE_SAME_USER = "No se puede eliminar su propio usuario.";
+   String CANNOT_DELETE_DEFAULT_ADMIN = "No se puede eliminar el usuario administrador por defecto. Cree un usuario nuevo con el rol de ADMINISTRADOR si desea eliminar esta cuenta.";
+   String UNEXPECTED_ERROR = "Ha ocurrido un error inesperado durante la operación";
 }

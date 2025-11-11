@@ -9,4 +9,8 @@ public interface AttributeIdentifiers {
     String PASSWORD_INPUT = "password";
     String VALIDATION_ERRORS = "validationErrors";
     String RESOURCE_EXISTS = "resourceExists";
+    String RESOURCE_NOT_FOUND = "resourceNotFound";
+    String MESSAGE = "message";
+    String ERROR = "error";
+    String USER = "user";
 }

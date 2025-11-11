@@ -7,7 +7,7 @@
 <%@ attribute name="showSidebar" required="false" type="java.lang.Boolean" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="es">
   <title>
     <c:out value="${title != null ? title : 'Citas UTEC'}"/>
   </title>
@@ -17,11 +17,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <!-- libraries -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"/>
+
+  <!-- libraries -->
+  <!-- FullCalendar -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/tailwind.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone.css"/>
@@ -51,10 +56,12 @@
 <script>
   feather.replace();
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" defer></script>
 <script src="${pageContext.request.contextPath}/public/assets/libs/simplebar/dist/simplebar.min.js"></script>
 <script src="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone-min.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/public/assets/js/app.js"></script>
-<div id="toaster" class="toaster"></div>
+<script src="${pageContext.request.contextPath}/public/assets/js/app.bundle.js"></script>
+<div id="toast-container" class="toast-top-right"></div>
 </body>
 </html>

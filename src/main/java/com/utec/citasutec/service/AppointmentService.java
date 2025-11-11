@@ -53,7 +53,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    private void createAppointment(AppointmentRequestDto appointmentRequestDto) {
+    public void createAppointment(AppointmentRequestDto appointmentRequestDto) {
         Optional<User> user = userService.findById(appointmentRequestDto.userId());
         Optional<Professional> professional = professionalService.findById(appointmentRequestDto.professionalId());
 

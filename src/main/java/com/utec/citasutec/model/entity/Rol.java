@@ -31,7 +31,7 @@ public class Rol {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @OneToMany(mappedBy = "rol")
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<User> users = new LinkedHashSet<>();
 
     @Override

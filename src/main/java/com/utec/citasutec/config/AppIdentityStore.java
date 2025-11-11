@@ -1,7 +1,7 @@
 package com.utec.citasutec.config;
 
 import com.utec.citasutec.model.dto.request.LoginDto;
-import com.utec.citasutec.model.dto.response.UserDto;
+import com.utec.citasutec.model.dto.response.UserResponseDto;
 import com.utec.citasutec.service.AuthService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -26,15 +26,15 @@ public class AppIdentityStore implements IdentityStore {
             log.atInfo().log("Validating credentials");
 
             LoginDto loginDto = new LoginDto(upc.getCaller(), upc.getPasswordAsString(), false);
-            UserDto userDto = authService.login(loginDto);
+            UserResponseDto userResponseDto = authService.login(loginDto);
 
-            if (Objects.isNull(userDto)) {
+            if (Objects.isNull(userResponseDto)) {
                 log.atInfo().log("User {} not found", upc.getCaller());
                 return CredentialValidationResult.INVALID_RESULT;
             }
 
             log.atInfo().log("User successfully logged in");
-            Set<String> roles = Set.of(userDto.role().name());
+            Set<String> roles = Set.of(userResponseDto.role().name());
 
             return new CredentialValidationResult(upc.getCaller(), roles);
         }

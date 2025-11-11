@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
-@WebServlet(name = "AnalyticsController", urlPatterns = { "/app/analytics" })
+@WebServlet(name = "AnalyticsController", urlPatterns = { "/api/analytics" })
 @ServletSecurity(@HttpConstraint(rolesAllowed = {"ADMIN", "AUDITOR" }))
 public class AnalyticsController extends HttpServlet {
 

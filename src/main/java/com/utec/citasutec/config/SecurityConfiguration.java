@@ -3,10 +3,12 @@ package com.utec.citasutec.config;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
 import jakarta.security.enterprise.authentication.mechanism.http.LoginToContinue;
+import jakarta.security.enterprise.authentication.mechanism.http.RememberMe;
 
 @CustomFormAuthenticationMechanismDefinition(
     loginToContinue = @LoginToContinue(
         loginPage = "/login.jsp",
+        errorPage = "/login.jsp",
         useForwardToLogin = false,
         useForwardToLoginExpression = ""
     )

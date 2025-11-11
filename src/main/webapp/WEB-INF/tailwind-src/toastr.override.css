@@ -1,0 +1,121 @@
+/* === TailwindCSS-styled toastr overrides === */
+
+/* --- container positioning --- */
+#toast-container {
+    @apply fixed z-[99999] pointer-events-none;
+}
+
+.toast-top-right {
+    @apply top-4 right-4;
+}
+
+.toast-top-left {
+    @apply top-4 left-4;
+}
+
+.toast-bottom-right {
+    @apply bottom-4 right-4;
+}
+
+.toast-bottom-left {
+    @apply bottom-4 left-4;
+}
+
+.toast-top-center {
+    @apply top-4 left-1/2 -translate-x-1/2;
+}
+
+.toast-bottom-center {
+    @apply bottom-4 left-1/2 -translate-x-1/2;
+}
+
+.toast-top-full-width,
+.toast-bottom-full-width {
+    @apply w-full flex justify-center;
+}
+
+/* --- toast base card --- */
+#toast-container > .toast {
+    @apply relative pointer-events-auto flex flex-col gap-1
+    w-80 max-w-full px-4 py-3 rounded-xl border shadow-lg
+    bg-white text-gray-800 transition-all duration-300
+    ease-in-out transform opacity-100;
+    animation: toast-enter 0.3s ease forwards;
+}
+
+#toast-container > .toast:hover {
+    @apply shadow-xl opacity-100 cursor-pointer;
+}
+
+/* --- animation --- */
+@keyframes toast-enter {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes toast-exit {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* --- toast types --- */
+#toast-container > .toast-success {
+    @apply border-green-200 bg-emerald-400 text-emerald-900;
+}
+
+#toast-container > .toast-error {
+    @apply border-red-100 bg-red-200 text-red-800;
+}
+
+#toast-container > .toast-info {
+    @apply border-blue-100 bg-blue-200 text-blue-800;
+}
+
+#toast-container > .toast-warning {
+    @apply border-yellow-100 bg-yellow-200 text-yellow-800;
+}
+
+/* --- close button --- */
+.toast-close-button {
+    @apply absolute top-2 right-3 text-gray-400 hover:text-gray-600
+    text-lg font-bold cursor-pointer transition-colors;
+}
+
+/* --- title and message --- */
+.toast-title {
+    @apply font-semibold text-gray-900 text-sm;
+}
+
+.toast-message {
+    @apply text-sm text-gray-700 leading-snug;
+}
+
+/* --- progress bar --- */
+.toast-progress {
+    @apply absolute bottom-0 left-0 h-1 rounded-b-xl bg-gray-200 transition-all duration-300;
+}
+
+
+/* --- responsiveness --- */
+@media (max-width: 480px) {
+    #toast-container > .toast {
+        @apply w-72 text-sm px-3 py-2;
+    }
+}
+
+@media (max-width: 360px) {
+    #toast-container > .toast {
+        @apply w-64 px-3 py-2;
+    }
+}

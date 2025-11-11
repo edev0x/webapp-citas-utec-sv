@@ -38,7 +38,7 @@ public class AdminResourcesController extends HttpServlet {
         log.info("Admin resource management request received.");
         String resource = req.getParameter("resource");
 
-        if (Objects.isNull(resource) || resource.isBlank() || resource.isEmpty()) {
+        if (Objects.isNull(resource) || resource.isBlank()) {
             log.warn("Resource parameter is missing or empty. Redirecting to admin dashboard.");
             resp.sendRedirect(req.getContextPath() + "/app/dashboard");
             return;

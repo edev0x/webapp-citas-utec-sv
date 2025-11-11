@@ -20,7 +20,7 @@
           <span>Dashboard</span>
         </a>
 
-        <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/home') ? 'bg-gray-800 font-medium' : ''}">
+        <a href="${pageContext.request.contextPath}/app/calendar" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/home') ? 'bg-gray-800 font-medium' : ''}">
           <i data-feather="calendar" class="w-5 h-5 flex-shrink-0"></i>
           <span>Calendario</span>
         </a>
@@ -70,15 +70,10 @@
       <!-- Welcome message -->
       <c:if test="${security.loggedIn}">
         <!-- Sidebar Footer -->
-        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gray-800 border-t border-gray-700">
+        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gray-800 border-t border-gray-700">
           <div class="w-full flex p-2">
-            <div class="flex items-center gap-3">
-              <img
-                  src="https://ui-avatars.com/api/?name=UT&background=93283a&color=fff&size=128"
-                  alt="User Avatar"
-                  class="w-10 h-10 rounded-lg shrink-0"
-              >
-              <div class="flex flex-col">
+            <div class="flex gap-3">
+              <div class="flex flex-col gap-2">
                 <span class="truncate font-medium text-sm">${security.username}</span>
                 <c:forEach items="${security.roles}" var="role">
                   <span class="badge-secondary text-[12px]">${role}</span>
