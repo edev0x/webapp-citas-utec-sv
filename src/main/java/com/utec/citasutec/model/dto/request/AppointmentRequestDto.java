@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public record AppointmentRequestDto(
     @NotNull(message = ValidationMessages.USER_ID_REQUIRED)
@@ -15,14 +14,17 @@ public record AppointmentRequestDto(
     @NotNull(message = ValidationMessages.PROFESSIONAL_ID_REQUIRED)
     Integer professionalId,
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    @NotBlank(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
     @NotNull(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
-    LocalDate appointmentDate,
-    @JsonFormat(pattern = "HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    String appointmentDate,
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    @NotBlank(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
     @NotNull(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
-    LocalTime appointmentStartTime,
-    @JsonFormat(pattern = "HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    String appointmentStartTime,
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    @NotBlank(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
     @NotNull(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
-    LocalTime appointmentEndTime,
+    String appointmentEndTime,
     @NotNull(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
     @ValidAppointmentState(message = ValidationMessages.INVALID_APPOINTMENT_STATE)
     String state,

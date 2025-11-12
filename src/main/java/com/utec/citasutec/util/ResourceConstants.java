@@ -8,4 +8,8 @@ public interface ResourceConstants {
     String AUDITS = "audits";
     String ROLES = "roles";
     String SERVICES = "services";
+
+    enum DefaultRoles {
+        USUARIO, ESTUDIANTE, PROFESIONAL, ADMIN, AUDITOR
+    }
 }

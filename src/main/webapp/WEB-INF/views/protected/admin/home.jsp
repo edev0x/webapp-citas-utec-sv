@@ -58,22 +58,20 @@
                       fill=""></path>
                   </svg>
                 </button>
-                <div id="chart-1-drop-down-menu-popover" data-popover aria-hidden="true" class="min-w-[36px]">
-                  <div role="menu" id="chart-1-drop-down-menu" aria-labelledby="chart-1-drop-down-trigger"
-                    class="rounded-md shadow-lg bg-white dark:bg-gray-800">
-                    <div role="menuitem">
-                      Ver detalles
-                    </div>
-                    <div role="menuitem">
-                      Eliminar
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
   
             <div class="max-w-full overflow-x-auto custom-scrollbar mb-4">
-              <div id="chart-1" class="h-full pl-2 xl:min-w-full" style="min-height: 300px;"></div>
+              <c:if test="${totalAppointments gt 0}">
+                <div id="appointments-by-month-chart" class="h-full pl-2 xl:min-w-full" style="min-height: 300px;"></div>
+              </c:if>
+              <c:if test="${totalAppointments eq 0}">
+                <div class="flex items-center justify-center h-full" style="min-height: 300px;">
+                  <p class="text-gray-500 dark:text-gray-400 font-semibold">
+                    No hay datos disponibles.
+                  </p>
+                </div>
+              </c:if>
             </div>
           </div>
         </div>
@@ -86,10 +84,10 @@
               </h3>
             </div>
             <div class="h-full">
-              <c:if test="${not empty appointmentsByStatus}">
-                <div id="chart-2" class="h-full mt-4" style="min-height: 300px;"></div>
+              <c:if test="${totalAppointments gt 0}">
+                <div id="appointments-by-state-chart" class="h-full mt-4" style="min-height: 300px;"></div>
               </c:if>
-              <c:if test="${empty appointmentsByStatus}">
+              <c:if test="${totalAppointments eq 0}">
                 <div class="flex items-center justify-center h-full">
                   <p class="text-gray-500 dark:text-gray-400 font-semibold">
                     No hay datos disponibles.

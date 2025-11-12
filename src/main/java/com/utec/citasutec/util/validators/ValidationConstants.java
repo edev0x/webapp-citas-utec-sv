@@ -8,6 +8,7 @@ public final class ValidationConstants {
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int MAX_NAME_LENGTH = 100;
     public static final int MIN_NAME_LENGTH = 4;
+    public static final String RESOURCE_PATTERN = "^[a-zA-Z0-9_-]+$";
 
     private ValidationConstants() {
         throw new IllegalStateException("Utility class");

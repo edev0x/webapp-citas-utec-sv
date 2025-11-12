@@ -74,15 +74,9 @@ public class AppointmentsRepository extends CrudRepository<Appointment> {
         }
     }
 
-    public List<AppointmentResponse> findAllAppointments() {
-        List<Appointment> appointments = em
-                .createQuery("SELECT a JOIN FETCH a.user JOIN FETCH a.professional FROM Appointment a",
-                        Appointment.class)
-                .getResultList();
-
-        return appointments.stream()
-                .map(AppointmentResponse::fromEntity)
-                .toList();
+    public List<Appointment> findAllAppointments() {
+        return em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user JOIN FETCH a.professional ", Appointment.class)
+            .getResultList();
     }
 
     public List<AppointmentResponse> findAllUpcomingAppointments() {
@@ -101,5 +95,10 @@ public class AppointmentsRepository extends CrudRepository<Appointment> {
             log.atError().log("Error retrieving upcoming appointments: {}", e.getMessage());
             return Collections.emptyList();
         }
+    }
+
+    public List<Appointment> findAllAppointmentsByUser(String email) {
+        return em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user u JOIN FETCH a.professional WHERE u.email = :email", Appointment.class)
+            .getResultList();
     }
 }

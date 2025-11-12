@@ -35,3 +35,59 @@ export const togglePasswordVisibility = () => {
 export const defaultJsonRequestHeaders = {
   "Content-Type": "application/json;charset=utf-8",
 }
+
+export const setProfessionalDefaultValue = (id) => {
+  const professionalIdInput = document.getElementById('professionalId-edit');
+  const professionalSelectTrigger = document.getElementById('professionals-select-trigger');
+  if (id) {
+    professionalIdInput.value = id;
+
+    const professionalOption = document.querySelector(`#professionals-select-listbox [data-value="${professionalId}"]`);
+    if (!professionalOption) return;
+
+    const triggerSpan = professionalSelectTrigger.querySelector('span');
+    if (triggerSpan) {
+      triggerSpan.textContent = professionalOption.textContent.trim();
+    } else {
+      console.error("Professional select trigger not found in DOM");
+    }
+  }
+}
+
+export const setDefaultAppointmentState = (state) => {
+  const appointmentStateInput = document.getElementById('appointmentState-edit');
+  const appointmentStateTrigger = document.getElementById('appointment-state-select-trigger');
+
+  if (state) {
+    appointmentStateInput.value = state;
+
+    const appointmentStateOption = document.querySelector(`#appointment-state-select-listbox [data-value="${state}"]`);
+    if (!appointmentStateOption) return;
+
+    const triggerSpan = appointmentStateTrigger.querySelector('span');
+    if (triggerSpan) {
+      triggerSpan.textContent = appointmentStateOption.textContent.trim();
+    } else {
+      console.error("Appointment state select trigger not found in DOM");
+    }
+  }
+}
+
+export const setDefaultUserValue = (id) => {
+  const userIdInput = document.getElementById('userId-edit');
+  const userSelectTrigger = document.getElementById('users-select-trigger');
+
+  if (id) {
+    userIdInput.value = id;
+    const userOption = document.querySelector(`#users-select-listbox [data-value="${id}"]`);
+    if (!userOption) return;
+
+    const triggerSpan = userSelectTrigger.querySelector('span');
+
+    if (triggerSpan) {
+      triggerSpan.textContent = userOption.textContent.trim();
+    } else {
+      console.error("User select trigger not found in DOM");
+    }
+  }
+}

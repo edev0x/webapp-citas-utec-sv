@@ -6,6 +6,7 @@ import com.utec.citasutec.repository.ProfessionalRepository;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -24,5 +25,9 @@ public class ProfessionalService {
 
     public Optional<ProfessionalResponseDto> findByIdAsDto(Integer id) {
         return this.findById(id).map(ProfessionalResponseDto::fromEntity);
+    }
+
+    public List<ProfessionalResponseDto> findAll() {
+        return professionalRepository.findAll().stream().map(ProfessionalResponseDto::fromEntity).toList();
     }
 }

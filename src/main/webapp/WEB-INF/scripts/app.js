@@ -3,10 +3,17 @@ import './components/charts';
 import './components/calendar-init';
 import './components/sidebar';
 
+// Auth and user's operations
 import './ops/authentication';
 import "./ops/create-user";
 import "./ops/update-user";
 import "./ops/delete-user";
+
+// Appointment's operations
+import "./ops/create-appointment";
+import "./ops/edit-appointment";
+import "./ops/delete-appointment";
+
 import { togglePasswordVisibility } from "./components/utils";
 
 document.addEventListener('DOMContentLoaded', () => {

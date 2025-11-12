@@ -117,7 +117,7 @@ function createUser() {
       })
     }
   })
-};
+}
 
 document.addEventListener("DOMContentLoaded", createUser);
 

@@ -27,37 +27,37 @@ public class Appointment {
     @Column(name = "id_cita", nullable = false)
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "El estudiante no puede ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_estudiante", nullable = false)
     private User user;
 
-    @NotNull
+    @NotNull(message = "El profesional no puede ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_profesional", nullable = false)
     private Professional professional;
 
-    @NotNull
+    @NotNull(message = "La fecha de la cita no puede ser nula")
     @Column(name = "fecha_cita", nullable = false)
     private LocalDate appointmentDate;
 
-    @NotNull
+    @NotNull(message = "La hora de inicio de la cita no puede ser nula")
     @Column(name = "hora_inicio", nullable = false)
     private LocalTime startTime;
 
-    @NotNull
+    @NotNull(message = "La hora de fin de la cita no puede ser nula")
     @Column(name = "hora_fin", nullable = false)
     private LocalTime endTime;
 
-    @NotNull
+    @NotNull(message = "El estado de la cita no puede ser nulo")
     @ColumnDefault("'PENDIENTE'")
     @Lob
     @Column(name = "estado", nullable = false)
     private String state;
 
-    @NotNull
+    @NotNull(message = "El motivo de la cita no puede ser nulo")
     @Lob
     @Column(name = "motivo", nullable = false)
     private String reason;

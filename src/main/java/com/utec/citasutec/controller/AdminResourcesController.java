@@ -1,14 +1,19 @@
 package com.utec.citasutec.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
+import com.utec.citasutec.model.dto.response.UserResponseDto;
+import com.utec.citasutec.service.ProfessionalService;
 import com.utec.citasutec.service.RoleService;
 import com.utec.citasutec.service.UserService;
+import com.utec.citasutec.util.AppointmentState;
 import com.utec.citasutec.util.ResourceConstants;
 import com.utec.citasutec.util.exceptions.UtecAppException;
 import com.utec.citasutec.util.security.RedirectUtils;
 
+import com.utec.citasutec.util.validators.ValidationConstants;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
@@ -32,6 +37,9 @@ public class AdminResourcesController extends HttpServlet {
 
     @Inject
     private RoleService roleService;
+
+    @Inject
+    private ProfessionalService professionalService;
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,7 +52,7 @@ public class AdminResourcesController extends HttpServlet {
             return;
         }
 
-        if (!resource.matches("^[a-zA-Z0-9_-]+$")) {
+        if (!resource.matches(ValidationConstants.RESOURCE_PATTERN)) {
             log.warn("Invalid resource parameter: {}. Redirecting to admin dashboard.", resource);
             resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=invalid_resource");
             return;
@@ -56,6 +64,9 @@ public class AdminResourcesController extends HttpServlet {
                 break;
             case ResourceConstants.SERVICES:
                 handleGetServicesResource(req, resp);
+                break;
+            case ResourceConstants.PROFESSIONALS:
+                handleGetProfessionalsResource(req, resp);
                 break;
             default:
                 log.warn("Unknown resource requested: {}. Redirecting to admin dashboard.", resource);
@@ -103,6 +114,18 @@ public class AdminResourcesController extends HttpServlet {
         } catch (ServletException | IOException | NumberFormatException e) {
             log.atError().log("Error forwarding to services management page: {}", e.getMessage());
             throw new UtecAppException("Error while trying to perform services request");
+        }
+    }
+
+    private void handleGetProfessionalsResource(HttpServletRequest request, HttpServletResponse response) {
+        try {
+
+            request.setAttribute("appointmentStates", AppointmentState.getStates());
+            request.setAttribute("professionals", professionalService.findAll());
+            request.getRequestDispatcher(RedirectUtils.getResourcePath(ResourceConstants.PROFESSIONALS)).forward(request, response);
+        } catch (ServletException | IOException | NumberFormatException e) {
+            log.atError().log("Error forwarding to professionals management page: {}", e.getMessage());
+            throw new UtecAppException("Error while trying to perform professionals request");
         }
     }
 }

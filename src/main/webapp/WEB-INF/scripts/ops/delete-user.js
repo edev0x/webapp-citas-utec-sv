@@ -2,6 +2,9 @@ import { getBaseUrl } from "../components/utils";
 
 function deleteUser() {
   const deleteUserForm = document.getElementById("delete-user-form");
+
+  if(!deleteUserForm) return;
+
   const deleteUserDialog = document.getElementById("uf-delete-user-dialog");
   const cancelDeleteUserBtn = document.getElementById("cancel-delete-user-btn");
   const submitDeleteUserBtn = document.getElementById("submit-delete-user-btn");

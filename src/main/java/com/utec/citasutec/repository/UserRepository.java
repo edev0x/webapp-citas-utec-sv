@@ -40,4 +40,10 @@ public class UserRepository extends CrudRepository<User> {
     public Paginated<User> getUsersPaginated(int page, int size, String searchField, String searchTerm) {
         return getPageable(page, size, searchField, searchTerm);
     }
+
+    public List<User> findActiveUsersByRole(String role) {
+        return em.createQuery("SELECT u FROM User u JOIN FETCH u.rol WHERE u.rol.name = :role AND u.isActive = true", User.class)
+                .setParameter("role", role)
+                .getResultList();
+    }
 }

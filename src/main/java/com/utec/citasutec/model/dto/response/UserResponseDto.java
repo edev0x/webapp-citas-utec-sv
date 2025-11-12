@@ -21,4 +21,7 @@ public record UserResponseDto(
         );
     }
 
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
 }

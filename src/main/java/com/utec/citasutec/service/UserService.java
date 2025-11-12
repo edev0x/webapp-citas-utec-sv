@@ -128,4 +128,13 @@ public class UserService {
             throw new AppServiceTxException("Error updating user", ex);
         }
     }
+
+    public List<UserResponseDto> findActiveUsersByRole(String roleName) {
+        try {
+            return userRepository.findActiveUsersByRole(roleName).stream().map(UserResponseDto::fromEntity).toList();
+        } catch (Exception e) {
+            log.atError().log("Error retrieving active users by role: {}", e.getMessage());
+            throw new AppServiceTxException("Error retrieving active users by role");
+        }
+    }
 }

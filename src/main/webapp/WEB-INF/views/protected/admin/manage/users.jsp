@@ -13,9 +13,9 @@
             <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4">
               <div class="flex flex-col gap-5 px-6 mb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 class="text-xl font-bold text-gray-800 dark:text-white/90">
+                  <h1 class="text-2xl font-bold text-gray-800 dark:text-white/90">
                     Gestión de Usuarios
-                  </h3>
+                  </h1>
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <form method="get" id="uf-search-form">
@@ -73,7 +73,7 @@
                     </div>
                     <div>
                       <button type="button" class="btn-secondary inline-flex items-center px-4 py-2 rounded-md text-sm font-medium"  onclick="document.getElementById('uf-create-user-dialog').showModal()" >
-                        <i data-feather="plus" class="inline-block w-4 h-4 mr-2"></i>
+                        <i data-feather="plus" class="inline-block w-4 h-4 mr-1"></i>
                         Agregar
                       </button>
                     </div>
@@ -178,7 +178,7 @@
                                class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                               <i data-feather="trash-2" class="inline-block w-4 h-4 mr-1"></i>
                             </a>
-                            <a href="#" id="edit-user-trigger" class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-primary px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
+                            <a href="#" id="edit-user-trigger" class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-gray-800 px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                                 <i data-feather="edit-3" class="inline-block w-4 h-4 mr-1"></i>
                             </a>
                           </div>

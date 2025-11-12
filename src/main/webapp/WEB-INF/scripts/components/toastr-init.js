@@ -14,21 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         timeOut: 3000,
         extendedTimeOut: 1000,
         tapToDismiss: true,
-        positionClass: "toast-top-right",
-        onShown: function(e) {
-            const toastType = e.classList.contains("toast-success")
-                ? "success"
-                : e.classList.contains("toast-error")
-                    ? "error"
-                    : e.classList.contains("toast-warning")
-                        ? "warning"
-                        : "info";
-            const icon = icons[toastType];
-            if (icon) {
-                e.querySelector(".toast-message").insertAdjacentHTML("afterbegin", `<div class="mr-2">${icon}</div>`);
-            } else {
-                console.error("toastr icon not found");
-            }
-        }
+        positionClass: "toast-top-right"
     };
 })

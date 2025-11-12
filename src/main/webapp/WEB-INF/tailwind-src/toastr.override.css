@@ -2,7 +2,7 @@
 
 /* --- container positioning --- */
 #toast-container {
-    @apply fixed z-[99999] pointer-events-none;
+    @apply fixed z-[9999] pointer-events-none;
 }
 
 .toast-top-right {

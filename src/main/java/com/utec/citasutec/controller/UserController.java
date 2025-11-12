@@ -7,6 +7,7 @@ import com.utec.citasutec.model.dto.response.UserResponseDto;
 import com.utec.citasutec.model.ejb.SecurityBean;
 import com.utec.citasutec.service.UserService;
 import com.utec.citasutec.util.AttributeIdentifiers;
+import com.utec.citasutec.util.ServletUtils;
 import com.utec.citasutec.util.formatters.ConstraintFormatter;
 import com.utec.citasutec.util.validators.ValidationMessages;
 
@@ -58,7 +59,7 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        setupResponseDefaults(resp);
+        ServletUtils.setJsonAsDefaultContentType(resp);
 
         HashMap<String, Object> responseMap = new HashMap<>();
 
@@ -150,7 +151,7 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        setupResponseDefaults(resp);
+        ServletUtils.setJsonAsDefaultContentType(resp);
 
         HashMap<String, Object> responseMap = new HashMap<>();
 
@@ -184,11 +185,6 @@ public class UserController extends HttpServlet {
         responseMap.put(AttributeIdentifiers.VALIDATION_ERRORS, errorValue);
         responseMap.put(AttributeIdentifiers.ERROR, true);
         sendResponse(resp, HttpServletResponse.SC_BAD_REQUEST, responseMap);
-    }
-
-    private void setupResponseDefaults(HttpServletResponse resp) {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
     }
 
     private void sendResponse(HttpServletResponse resp, int status, HashMap<String, Object> responseMap)

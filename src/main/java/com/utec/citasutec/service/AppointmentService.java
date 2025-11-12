@@ -1,5 +1,8 @@
 package com.utec.citasutec.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +10,7 @@ import com.utec.citasutec.model.dto.request.AppointmentRequestDto;
 import com.utec.citasutec.model.dto.response.AppointmentByMonthResponse;
 import com.utec.citasutec.model.dto.response.AppointmentByStateResponse;
 import com.utec.citasutec.model.dto.response.AppointmentResponse;
+import com.utec.citasutec.model.dto.response.AppointmentResponseDto;
 import com.utec.citasutec.model.entity.Appointment;
 import com.utec.citasutec.model.entity.Professional;
 import com.utec.citasutec.model.entity.User;
@@ -61,8 +65,11 @@ public class AppointmentService {
             Appointment appointment = new Appointment();
             appointment.setUser(user.get());
             appointment.setProfessional(professional.get());
-            appointment.setAppointmentDate(appointmentRequestDto.appointmentDate());
+            appointment.setAppointmentDate(LocalDate.parse(appointmentRequestDto.appointmentDate()));
+            appointment.setStartTime(LocalTime.parse(appointmentRequestDto.appointmentStartTime()));
+            appointment.setEndTime(LocalTime.parse(appointmentRequestDto.appointmentEndTime()));
             appointment.setState(appointmentRequestDto.state());
+            appointment.setReason(appointmentRequestDto.reason());
 
             appointmentsRepository.save(appointment);
             log.atInfo().log("Appointment created successfully for user ID: {} with professional ID: {}",
@@ -72,7 +79,7 @@ public class AppointmentService {
 
     public List<AppointmentResponse> findAllAppointments() {
         try {
-            return appointmentsRepository.findAllAppointments();
+            return appointmentsRepository.findAllAppointments().stream().map(AppointmentResponse::fromEntity).toList();
         } catch (Exception e) {
             log.atError().log("Error retrieving all appointments: {}", e.getMessage());
             throw new AppServiceTxException("Error retrieving all appointments");
@@ -103,6 +110,25 @@ public class AppointmentService {
         } catch (Exception e) {
             log.atError().log("Error retrieving paginated appointments: {}", e.getMessage());
             throw new AppServiceTxException("Error retrieving paginated appointments");
+        }
+    }
+
+    public List<AppointmentResponseDto> findAllAppointmentsCreatedByUser(String email) {
+        try {
+            return this.appointmentsRepository.findAllAppointmentsByUser(email)
+                .stream().map(AppointmentResponseDto::fromEntity).toList();
+        } catch (Exception e) {
+            log.atError().log("Error retrieving appointments created by user: {}", e.getMessage());
+            throw new AppServiceTxException("Error retrieving appointments created by user");
+        }
+    }
+
+    public List<AppointmentResponseDto> findAll() {
+        try {
+            return this.appointmentsRepository.findAllAppointments().stream().map(AppointmentResponseDto::fromEntity).toList();
+        } catch (Exception e) {
+            log.atError().log("Error retrieving appointments: {}", e.getMessage());
+            throw new AppServiceTxException("Error retrieving appointments");
         }
     }
 }

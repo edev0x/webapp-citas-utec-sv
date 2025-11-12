@@ -24,9 +24,6 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"/>
 
   <!-- libraries -->
-  <!-- FullCalendar -->
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
-
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/css/tailwind.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/apexcharts/dist/apexcharts.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/public/assets/libs/dropzone/dist/dropzone.css"/>

@@ -83,4 +83,14 @@ public class User {
     private void prePersist() {
         this.createdAt = Instant.now();
     }
+
+    @Transient
+    private String fullName;
+
+    public String getFullName() {
+        if (fullName == null) {
+            fullName = String.format("%s %s", firstName, lastName);
+        }
+        return fullName;
+    }
 }
