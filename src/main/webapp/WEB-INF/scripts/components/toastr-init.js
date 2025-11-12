@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
         timeOut: 3000,
         extendedTimeOut: 1000,
         tapToDismiss: true,
-        positionClass: "toast-top-right"
+        positionClass: "toast-top-right",
+        iconClasses: {
+            error: 'feather icon-x-circle text-red-500 mr-2 ',
+            warning: 'feather icon-alert-triangle text-yellow-500 mr-2',
+            info: 'feather icon-info text-blue-500 mr-2',
+            success: 'feather icon-check-circle text-green-500 mr-2'
+        }
     };
 })

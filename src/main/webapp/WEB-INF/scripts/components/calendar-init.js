@@ -52,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     endTime: '12:00'
                 }
             ],
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: 'uppercase',
+            },
             selectConstraint: "businessHours",
             eventConstraint: "businessHours",
             plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
@@ -60,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
             headerToolbar: calendarHeaderToolBar,
             customButtons: {
                 addEventButton: {
-                    text: 'Agregar Cita',
+                    text: 'Agendar Cita',
                     click: openAddEventModal
                 },
             },
@@ -100,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     html: `
                         <div class="fc-event-main-frame cursor-pointer w-full">
                             <div class="fc-event-title-container">
+                                <div class="fc-event-time">${eventInfo.timeText}</div>
                                 <div class="fc-event-title overflow-hidden truncate font-medium">${eventTitle}</div>
                             </div>
                             ${eventDescription ? `<div class="fc-event-description overflow-hidden truncate">${eventDescription}</div>` : ""}

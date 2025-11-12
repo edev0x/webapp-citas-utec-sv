@@ -7,7 +7,7 @@ function deleteUser() {
 
   const deleteUserDialog = document.getElementById("uf-delete-user-dialog");
   const cancelDeleteUserBtn = document.getElementById("cancel-delete-user-btn");
-  const submitDeleteUserBtn = document.getElementById("submit-delete-user-btn");
+  const submitDeleteUserBtn = document.getElementById("delete-user-submit-btn");
   const spinner = deleteUserForm.querySelector('#delete-user-loader-icon');
 
   if (!deleteUserDialog) {
@@ -34,11 +34,9 @@ function deleteUser() {
       spinner.classList.remove("hidden");
       submitDeleteUserBtn.textContent = "Por favor espere...";
 
-      fetch(`${getBaseUrl()}/api/users/${userId}`, {
+      fetch(`${getBaseUrl()}/api/users?id=${userId}`, {
         method: "DELETE",
       }).then(async (res) => {
-        const data = await res.json();
-
         if (res.status === 204) {
           deleteUserDialog.close();
           toastr.success("Usuario eliminado exitosamente.");

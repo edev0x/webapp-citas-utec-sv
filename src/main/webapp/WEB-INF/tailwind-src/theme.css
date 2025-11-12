@@ -342,6 +342,9 @@ span.flatpickr-weekday,
 .fc-event {
   @apply focus:shadow-none;
 }
+.fc-v-event .fc-event-main {
+  @apply text-gray-400 dark:text-white/30;
+}
 .fc-daygrid-event.fc-event-start {
   @apply ml-3!;
 }

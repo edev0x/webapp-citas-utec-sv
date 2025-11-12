@@ -2,6 +2,7 @@ import './components/utils';
 import './components/charts';
 import './components/calendar-init';
 import './components/sidebar';
+import './components/avatar-dropdown';
 
 // Auth and user's operations
 import './ops/authentication';

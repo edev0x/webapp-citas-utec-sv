@@ -112,19 +112,25 @@ const initAppointmentsPieChart = async () => {
   const options = {
     series: data.map(d => d.totalAppointments),
     labels: data.map(d => d.state),
-    colors: ["#465FFF", "#9CB9FF"],
+    theme: {
+      palette: 'palette6',
+    },
     chart: {
       fontFamily: "Outfit, sans-serif",
-      type: "pie",
+      type: "donut",
       height: 300,
       toolbar: {
         show: false,
       },
+      animations: {
+        speed: 200
+      }
     },
     legend: {
       position: 'bottom',
       horizontalAlign: 'center',
       fontFamily: "Outfit",
+      color: '#f3f3f3',
     },
     dataLabels: {
       enabled: true,
@@ -143,9 +149,9 @@ const initAppointmentsPieChart = async () => {
       breakpoint: 480,
       options: {
         chart: {
-          height: 250
+          height: 300
         }
-      }
+      },
     }]
   }
 
