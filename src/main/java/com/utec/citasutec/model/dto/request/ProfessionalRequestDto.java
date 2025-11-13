@@ -16,7 +16,7 @@ public record ProfessionalRequestDto(
     )
     String fullName,
     @NotBlank(message = ValidationMessages.REQUIRED_FIELD_ERROR_GENERIC)
-    @Email(message = ValidationMessages.INVALID_EMAIL_FORMAT)
+    @Email(message = ValidationMessages.INVALID_EMAIL_FORMAT, regexp = ValidationConstants.EMAIL_PATTERN)
     String email,
     @NotBlank(message = ValidationMessages.REQUIRED_FIELD_ERROR)
     String specialty,

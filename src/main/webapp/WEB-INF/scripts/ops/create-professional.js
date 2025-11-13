@@ -7,7 +7,10 @@ function createProfessional() {
     const professionalCreationForm = document.getElementById('professional-creation-form');
     const isActiveInput = document.getElementById("professional-isActive");
     const submitButton = document.getElementById('save-professional-button');
-    const spinner = document.getElementById('save-professional-loader'); 
+    const spinner = document.getElementById('delete-professional-loader'); 
+    const specialtyListBox = document.getElementById(
+      "specialties-select-listbox"
+    );
 
     const openDialogButton = document.getElementById(
       "open-professional-creation-dialog-button"
@@ -22,11 +25,11 @@ function createProfessional() {
     });
 
     closeDialogButton.addEventListener("click", () => {
-        professionalCreationDialog.close();
         professionalCreationForm.reset();
         submitButton.disabled = false;
         submitButton.textContent = 'Guardar';
         spinner.classList.add("hidden");
+        professionalCreationDialog.close();
     });
 
     professionalCreationForm.addEventListener('submit',  (event) => {
@@ -35,19 +38,23 @@ function createProfessional() {
 
         try {
             const formData = new FormData(event.target);
+
+            const specialtyValue = specialtyListBox.querySelector('[aria-selected="true"]')?.textContent;
+
+        
             const payload = {
-                fullName: formData.get('professional-fullName'),
-                email: formData.get('professional-email'),
-                isActive: isActiveInput.checked,
-                specialty: formData.get('specialtyId')
+              fullName: formData.get("professional-fullName"),
+              email: formData.get("professional-email"),
+              isActive: isActiveInput.checked,
+              specialty: specialtyValue || "SIN ESPECIALIDAD",
             };
             
             const jsonPayload = JSON.stringify(payload);
 
-            spinner.classList.remove("hidden");
             closeDialogButton.disabled = true;
             submitButton.disabled = true;
             submitButton.textContent = "Guardando...";
+            spinner.classList.remove("hidden");
 
             fetch(`${getBaseUrl()}/api/professionals`, {
                 method: 'POST',

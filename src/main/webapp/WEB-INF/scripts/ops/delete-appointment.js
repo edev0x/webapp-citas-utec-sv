@@ -20,9 +20,6 @@ function deleteAppointment() {
       const formData = new FormData(event.target);
       const id = formData.get("appointmentId-delete");
 
-      console.log(formData);
-      console.log(`Event fired: delete appointment with id ${id}`)
-
       cancelDeleteAppointmentBtn.disabled = true;
       submitDeleteAppointmentBtn.disabled = true;
       submitDeleteAppointmentBtn.textContent = "";

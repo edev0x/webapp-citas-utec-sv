@@ -9,12 +9,15 @@ import com.utec.citasutec.util.ResourceConstants;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "CalendarController", urlPatterns = { "/app/calendar" })
+@ServletSecurity(@HttpConstraint(rolesAllowed = { "ADMIN", "PROFESIONAL", "ESTUDIANTE" }))
 public class CalendarController extends HttpServlet {
 
     @Inject

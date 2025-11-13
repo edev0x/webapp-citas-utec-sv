@@ -17,6 +17,7 @@ import "./ops/delete-appointment";
 
 // Professional's operations
 import "./ops/create-professional";
+import "./ops/delete-professional";
 
 import { togglePasswordVisibility } from "./components/utils";
 
