@@ -10,59 +10,90 @@
 
       <c:set var="path" value="${pageContext.request.requestURL}" />
 
+      <c:if test="${security.loggedIn}">
+        <c:choose>
+          <c:when test="${security.hasRole('ADMIN') or security.hasRole('AUDITOR')}">
+            <!-- Dashboard -->
+            <a href="${pageContext.request.contextPath}/app/dashboard" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/admin/home') ? 'bg-gray-800 font-medium' : ''}">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              <span>Dashboard</span>
+            </a>
 
-      <c:if test="${security.hasRole('ADMIN')}">
-        <!-- Dashboard -->
-        <a href="${pageContext.request.contextPath}/app/dashboard" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/admin/home') ? 'bg-gray-800 font-medium' : ''}">
-          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-          </svg>
-          <span>Dashboard</span>
-        </a>
+            <a href="${pageContext.request.contextPath}/app/calendar" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/page') ? 'bg-gray-800 font-medium' : ''}">
+              <i data-feather="calendar" class="w-5 h-5 flex-shrink-0"></i>
+              <span>Calendario</span>
+            </a>
 
-        <a href="${pageContext.request.contextPath}/app/calendar" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/home') ? 'bg-gray-800 font-medium' : ''}">
-          <i data-feather="calendar" class="w-5 h-5 flex-shrink-0"></i>
-          <span>Calendario</span>
-        </a>
+            <!-- Administrar  -->
+            <div class="menu-item">
+              <button class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition w-full menu-parent">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span class="flex-1 text-left text-sm">Administrar</span>
+                <svg class="w-4 h-4 transition-transform chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="submenu hidden ml-8 mt-2 space-y-1">
+                <a href="${pageContext.request.contextPath}/app/manage?resource=users" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/users') ? 'bg-gray-800 font-medium' : ''} ">
+                  <span>Usuarios</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/app/manage?resource=roles" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
+                  <span>Roles</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/app/manage?resource=services" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/services') ? 'bg-gray-800 font-medium' : ''}">
+                  <span>Servicios</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/app/manage?resource=professionals" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/professionals') ? 'bg-gray-800 font-medium' : ''}">
+                  <span>Profesionales</span>
+                </a>
+              </div>
+            </div>
 
-        <!-- Administrar  -->
-        <div class="menu-item">
-          <button class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition w-full menu-parent">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            <span class="flex-1 text-left text-sm">Administrar</span>
-            <svg class="w-4 h-4 transition-transform chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="submenu hidden ml-8 mt-2 space-y-1">
-            <a href="${pageContext.request.contextPath}/app/manage?resource=users" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/users') ? 'bg-gray-800 font-medium' : ''} ">
-              <span>Usuarios</span>
+            <!-- Settings -->
+            <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(pageContext.request.requestURI, 'bg-gray-800 font-medium') ? 'bg-gray-800' : ''}">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>Ajustes</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage?resource=roles" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
-              <span>Roles</span>
+          </c:when>
+          <c:when test="${security.hasRole('ESTUDIANTE')}">
+            <!-- Dashboard -->
+            <a href="${pageContext.request.contextPath}/app/s/home" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/s/home') ? 'bg-gray-800 font-medium' : ''}">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              <span>Home</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage?resource=services" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/services') ? 'bg-gray-800 font-medium' : ''}">
-              <span>Servicios</span>
+
+            <a href="${pageContext.request.contextPath}/app/calendar" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:containsIgnoreCase(path, '/calendar/page') ? 'bg-gray-800 font-medium' : ''}">
+              <i data-feather="calendar" class="w-5 h-5 flex-shrink-0"></i>
+              <span>Calendario</span>
             </a>
-            <a href="${pageContext.request.contextPath}/app/manage?resource=professionals" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/professionals') ? 'bg-gray-800 font-medium' : ''}">
-              <span>Profesionales</span>
+
+            <a href="${pageContext.request.contextPath}/app/s/my-appointments" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(path, '/app/my-appointments') ? 'bg-gray-800 font-medium' : ''}">
+              <i data-feather="bookmark" class="w-5 h-5 flex-shrink-0"></i>
+              <span>Mis Citas</span>
             </a>
-          </div>
-        </div>
+          </c:when>
+
+          <c:otherwise>
+            <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm">
+              <i data-feather="alert-triangle" class="w-5 h-5 flex-shrink-0"></i>
+              <span class="ml-2">
+                Sesi&oacute;n Expirada. Inicie Sesion nuevamente o intente refrescar la p&aacute;gina.
+              </span>
+            </div>
+          </c:otherwise>
+        </c:choose>
       </c:if>
 
-      <!-- Settings -->
-      <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(pageContext.request.requestURI, 'bg-gray-800 font-medium') ? 'bg-gray-800' : ''}">
-        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-        <span>Ajustes</span>
-      </a>
-
-      <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(pageContext.request.requestURI, 'bg-gray-800 font-medium') ? 'bg-gray-800' : ''}">
+      <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(path, '/app/help') ? 'bg-gray-800 font-medium' : ''}">
         <i data-feather="help-circle" class="w-5 h-5 flex-shrink-0"></i>
         <span>Centro de Ayuda</span>
       </a>

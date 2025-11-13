@@ -57,11 +57,11 @@ public class UserService {
         try {
             Paginated<User> paginatedUsers = userRepository.getPageable(page, size, searchField, searchTerm);
 
-            List<UserResponseDto> userResponseDtos = paginatedUsers.getItems().stream()
+            List<UserResponseDto> userResponseDtos = paginatedUsers.items().stream()
                     .map(UserResponseDto::fromEntity)
                     .toList();
-            return new Paginated<>(userResponseDtos, paginatedUsers.getTotalItems(), paginatedUsers.getCurrentPage(),
-                    paginatedUsers.getPageSize(), paginatedUsers.getTotalPages());
+            return new Paginated<>(userResponseDtos, paginatedUsers.totalItems(), paginatedUsers.currentPage(),
+                    paginatedUsers.pageSize(), paginatedUsers.totalPages());
         } catch (Exception e) {
             throw new AppServiceTxException("Error retrieving paginated users", e);
         }

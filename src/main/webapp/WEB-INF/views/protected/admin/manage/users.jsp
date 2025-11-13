@@ -80,8 +80,8 @@
                 </div>
               </div>
               <div class="max-w-full overflow-x-auto custom-scrollbar">
-                <c:if test="${paginatedUsers != null and not empty paginatedUsers.getItems()}">
-                  <c:set var="usersList" value="${paginatedUsers.getItems()}" />
+                <c:if test="${paginatedUsers != null and not empty paginatedUsers.items()}">
+                  <c:set var="usersList" value="${paginatedUsers.items()}" />
                   <table class="min-w-full">
                     <!-- header -->
                     <thead class="border-gray-100 border-y bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
