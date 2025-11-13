@@ -99,6 +99,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void updateUser(UserRequestDto userRequestDto) {
         try {
             User user = userRepository.findById(userRequestDto.id()).orElse(null);

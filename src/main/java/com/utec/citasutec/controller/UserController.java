@@ -1,7 +1,6 @@
 package com.utec.citasutec.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.utec.citasutec.model.dto.request.UserRequestDto;
 import com.utec.citasutec.model.dto.response.ApiResponse;
 import com.utec.citasutec.model.dto.response.UserResponseDto;
@@ -84,7 +83,6 @@ public class UserController extends HttpServlet {
         log.info("Deleting user...");
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        HashMap<String, Object> responseMap = new HashMap<>();
 
         try {
             List<UserResponseDto> users = userService.findAllWithRoles();

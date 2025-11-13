@@ -15,6 +15,9 @@ import "./ops/create-appointment";
 import "./ops/edit-appointment";
 import "./ops/delete-appointment";
 
+// Professional's operations
+import "./ops/create-professional";
+
 import { togglePasswordVisibility } from "./components/utils";
 
 document.addEventListener('DOMContentLoaded', () => {

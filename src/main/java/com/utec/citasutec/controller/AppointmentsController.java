@@ -1,14 +1,16 @@
 package com.utec.citasutec.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.protobuf.Api;
 import com.utec.citasutec.model.dto.request.AppointmentRequestDto;
 import com.utec.citasutec.model.dto.response.ApiResponse;
-import com.utec.citasutec.model.dto.response.AppointmentResponse;
 import com.utec.citasutec.model.dto.response.AppointmentResponseDto;
 import com.utec.citasutec.service.AppointmentService;
-import com.utec.citasutec.util.AttributeIdentifiers;
 import com.utec.citasutec.util.ServletUtils;
 import com.utec.citasutec.util.exceptions.AppServiceTxException;
 import com.utec.citasutec.util.exceptions.RepositoryTransactionException;
@@ -16,6 +18,7 @@ import com.utec.citasutec.util.formatters.ConstraintFormatter;
 import com.utec.citasutec.util.formatters.LocalDateGsonAdapter;
 import com.utec.citasutec.util.formatters.ResponseUtils;
 import com.utec.citasutec.util.validators.ValidationMessages;
+
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.servlet.ServletException;
@@ -28,12 +31,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @WebServlet(name = "AppointmentsController", urlPatterns = {"/appointments"})
@@ -76,7 +73,6 @@ public class AppointmentsController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletUtils.setJsonAsDefaultContentType(resp);
         try {
-            HashMap<String, Object> responseMap = new HashMap<>();
             AppointmentRequestDto appointmentRequestDto = GSON.fromJson(req.getReader(), AppointmentRequestDto.class);
             Set<ConstraintViolation<AppointmentRequestDto>> constraintViolations = validator.validate(appointmentRequestDto);
 
@@ -121,7 +117,6 @@ public class AppointmentsController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletUtils.setJsonAsDefaultContentType(resp);
         try {
-            HashMap<String, Object> responseMap = new HashMap<>();
             AppointmentRequestDto appointmentRequestDto = GSON.fromJson(req.getReader(), AppointmentRequestDto.class);
             Set<ConstraintViolation<AppointmentRequestDto>> constraintViolations = validator.validate(appointmentRequestDto);
 

@@ -1,6 +1,5 @@
 package com.utec.citasutec.controller;
 
-import com.google.gson.Gson;
 import com.utec.citasutec.service.AppointmentService;
 import com.utec.citasutec.util.formatters.ResponseUtils;
 import jakarta.inject.Inject;
@@ -19,8 +18,6 @@ import java.util.Objects;
 @WebServlet(name = "AnalyticsController", urlPatterns = { "/analytics" })
 @ServletSecurity(@HttpConstraint(rolesAllowed = {"ADMIN", "AUDITOR" }))
 public class AnalyticsController extends HttpServlet {
-
-    private final Gson gson = new Gson();
 
     @Inject
     private AppointmentService appointmentService;

@@ -2,7 +2,7 @@ package com.utec.citasutec.util.validators;
 
 public interface ValidationMessages {
    String REQUIRED_FIELD_ERROR = "El campo %s es obligatorio";
-   String INVALID_EMAIL_FORMAT = "El formato del email es incorrecto";
+   String INVALID_EMAIL_FORMAT = "El formato del correo electrónico es inválido";
    String INVALID_PASSWORD_FORMAT = "El formato de la contrase&ntilde;a es invalido. Debe contener al menos 8 caracteres, una letra, un numero y un caracter especial @#$%^&+=";
    String INVALID_CREDENTIALS = "Las credenciales ingresadas son incorrectas o no pertenecen a ninguna cuenta. Int&eacute;ntalo de nuevo";
    String REQUIRED_FIELD_ERROR_GENERIC = "Este campo es obligatorio";
@@ -20,10 +20,8 @@ public interface ValidationMessages {
    String CANNOT_DELETE_SAME_USER = "No se puede eliminar su propio usuario.";
    String CANNOT_DELETE_DEFAULT_ADMIN = "No se puede eliminar el usuario administrador por defecto. Cree un usuario nuevo con el rol de ADMINISTRADOR si desea eliminar esta cuenta.";
    String UNEXPECTED_ERROR = "Ha ocurrido un error inesperado durante la operación";
-
    String USER_NOT_FOUND_EXCEPTION = "User with ID %d not found";
    String PROFESSIONAL_NOT_FOUND_EXCEPTION = "Professional with ID %d not found";
-   String DB_ERROR_EXCEPTION = "Database error while updating appointment";
-   String UNEXPECTED_ERROR_EXCEPTION = "Unexpected error while updating appointment";
-
+   String ROLE_MAX_LENGTH = "El nombre del rol debe contener entre 4 y 20 caracteres";
+   String ROLE_ID_REQUIRED = "El identificador del rol es obligatorio";
 }

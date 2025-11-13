@@ -1,17 +1,35 @@
 package com.utec.citasutec.model.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -68,10 +86,12 @@ public class Appointment {
     private Instant creationDate;
 
     @OneToMany(mappedBy = "appointment")
+    @Builder.Default
     private Set<Log> logs = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "appointment")
-    private Set<Reminder> recordatorios = new LinkedHashSet<>();
+    @Builder.Default
+    private Set<Reminder> recordatorios = new HashSet<>();
 
     @PrePersist
     private void prePersist() {

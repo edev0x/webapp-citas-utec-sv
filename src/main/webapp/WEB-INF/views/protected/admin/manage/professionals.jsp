@@ -16,7 +16,7 @@
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <div>
-                    <button type="button" class="btn-primary">
+                    <button type="button" class="btn-primary" id="open-professional-creation-dialog-button" >
                       <i data-feather="plus" class="inline-block w-4 h-4 mr-1"></i>
                       Agregar
                     </button>
@@ -35,22 +35,22 @@
                       <thead class="border-gray-100 border-y bg-gray-50">
                         <tr>
                           <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
-                            <span class="block text-gray-700 font-medium">
+                            <span class="block text-gray-700 font-medium text-sm">
                               Id
                             </span>
                           </th>
                           <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
-                            <span class="block text-gray-700 font-medium">
+                            <span class="block text-gray-700 font-medium text-sm">
                               Profesional
                             </span>
                           </th>
                           <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
-                            <span class="block text-gray-700 font-medium">
+                            <span class="block text-gray-700 font-medium text-sm">
                               Especialidad
                             </span>
                           </th>
                           <th class="px-6 py-3 whitespace-nowrap">
-                            <span class="block text-gray-700 font-medium">
+                            <span class="block text-gray-700 font-medium text-sm">
                               Acciones
                             </span>
                           </th>
@@ -102,4 +102,5 @@
       </div>
     </div>
   </div>
+  <jsp:include page="/WEB-INF/views/partials/professionals/create-professional-dialog.jsp" />
 </t:layout>

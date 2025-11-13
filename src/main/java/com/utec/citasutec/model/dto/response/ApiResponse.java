@@ -2,10 +2,12 @@ package com.utec.citasutec.model.dto.response;
 
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Map;
 
 @Builder
+@Getter
 public final class ApiResponse {
     private final String message;
     private final boolean error;

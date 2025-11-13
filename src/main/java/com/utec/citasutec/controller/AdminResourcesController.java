@@ -68,6 +68,8 @@ public class AdminResourcesController extends HttpServlet {
                 break;
             case ResourceConstants.APPOINTMENTS:
                 handleGetAppointmentsResource(req, resp);
+            case ResourceConstants.ROLES:
+                resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=not_implemented");
             default:
                 log.warn("Unknown resource requested: {}. Redirecting to admin dashboard.", resource);
                 resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=unknown_resource");

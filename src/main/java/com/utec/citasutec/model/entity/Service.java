@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -24,6 +25,10 @@ public class Service {
     @NotNull
     @Column(name = "nombre_servicio", nullable = false, length = 250)
     private String serviceName;
+
+    @NotNull
+    @Column(name = "fecha", nullable = false)
+    private LocalDate serviceDate;
 
     @NotNull
     @Column(name = "duracion", nullable = false)

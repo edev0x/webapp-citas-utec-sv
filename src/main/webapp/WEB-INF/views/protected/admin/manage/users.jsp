@@ -18,7 +18,7 @@
                   </h1>
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <form method="get" id="uf-search-form">
+                  <form method="get" id="uf-search-form hidden">
                     <div class="relative">
                       <!-- Search input -->
                       <span class="absolute -translate-y-1/2 pointer-events-none top-1/2 left-4">
@@ -72,7 +72,7 @@
                       <input type="hidden" name="uf-select-value" value="firstName" />
                     </div>
                     <div>
-                      <button type="button" class="btn-secondary inline-flex items-center px-4 py-2 rounded-md text-sm font-medium"  onclick="document.getElementById('uf-create-user-dialog').showModal()" >
+                      <button type="button" class="btn-primary inline-flex items-center px-4 py-2 rounded-md text-sm font-medium"  onclick="document.getElementById('uf-create-user-dialog').showModal()" >
                         <i data-feather="plus" class="inline-block w-4 h-4 mr-1"></i>
                         Agregar
                       </button>
