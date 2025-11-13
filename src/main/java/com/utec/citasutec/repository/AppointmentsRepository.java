@@ -5,6 +5,7 @@ import com.utec.citasutec.model.dto.response.AppointmentByStateResponse;
 import com.utec.citasutec.model.dto.response.AppointmentResponse;
 import com.utec.citasutec.model.entity.Appointment;
 import com.utec.citasutec.repository.factory.CrudRepository;
+import com.utec.citasutec.util.exceptions.RepositoryTransactionException;
 import jakarta.ejb.Stateless;
 import lombok.extern.slf4j.Slf4j;
 
@@ -100,5 +101,41 @@ public class AppointmentsRepository extends CrudRepository<Appointment> {
     public List<Appointment> findAllAppointmentsByUser(String email) {
         return em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user u JOIN FETCH a.professional WHERE u.email = :email", Appointment.class)
             .getResultList();
+    }
+
+    public void deleteById(Integer id) {
+        em.createQuery("DELETE FROM Appointment a WHERE a.id = :id")
+            .setParameter("id", id)
+            .executeUpdate();
+    }
+
+    public void deleteIfAssignedToUser(Integer id, String userEmail) {
+        Appointment appointment = em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user u WHERE a.id = :id AND u.email = :userEmail", Appointment.class)
+            .setParameter("id", id)
+            .setParameter("userEmail", userEmail)
+            .getSingleResult();
+
+        if (appointment != null) {
+            this.deleteById(appointment.getId());
+        } else {
+            throw new RepositoryTransactionException("Appointment cannot be deleted if is not assigned to logged in user");
+        }
+    }
+
+    public void updateAppointment(Appointment appointment) {
+        em.merge(appointment);
+    }
+
+    public void updateAppointmentIfAssignedToUser(Appointment appointment, String userEmail) {
+        Appointment appointmentResult = em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user u WHERE a.id = :id AND u.email = :userEmail", Appointment.class)
+            .setParameter("id", appointment.getId())
+            .setParameter("userEmail", userEmail)
+            .getSingleResult();
+
+        if (appointmentResult != null) {
+            this.updateAppointment(appointment);
+        } else {
+            throw new RepositoryTransactionException("Appointment cannot be update if is not assigned to logged in user");
+        }
     }
 }

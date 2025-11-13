@@ -42,8 +42,6 @@ function createAppointment() {
         headers: defaultJsonRequestHeaders,
         body: JSON.stringify(payload),
       }).then(async (res) => {
-        const data = await res.json();
-
         if (res.status === 201) {
           appointmentCreationDialog.close();
           toastr.success("Cita agendada exitosamente.");
@@ -51,6 +49,7 @@ function createAppointment() {
             window.location.reload();
           }, 3000);
         } else {
+          const data = await res.json();
           if (data.validationErrors) {
             Object.entries(data.validationErrors).forEach(([field, message]) => {
               const errorElement = document.getElementById(`${field}-error`);

@@ -1,10 +1,8 @@
 package com.utec.citasutec.controller;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
-import com.utec.citasutec.model.dto.response.UserResponseDto;
 import com.utec.citasutec.service.ProfessionalService;
 import com.utec.citasutec.service.RoleService;
 import com.utec.citasutec.service.UserService;
@@ -68,6 +66,8 @@ public class AdminResourcesController extends HttpServlet {
             case ResourceConstants.PROFESSIONALS:
                 handleGetProfessionalsResource(req, resp);
                 break;
+            case ResourceConstants.APPOINTMENTS:
+                handleGetAppointmentsResource(req, resp);
             default:
                 log.warn("Unknown resource requested: {}. Redirecting to admin dashboard.", resource);
                 resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=unknown_resource");
@@ -126,6 +126,15 @@ public class AdminResourcesController extends HttpServlet {
         } catch (ServletException | IOException | NumberFormatException e) {
             log.atError().log("Error forwarding to professionals management page: {}", e.getMessage());
             throw new UtecAppException("Error while trying to perform professionals request");
+        }
+    }
+
+    private void handleGetAppointmentsResource(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher(RedirectUtils.getResourcePath(ResourceConstants.APPOINTMENTS)).forward(request, response);
+        } catch (ServletException | IOException ex) {
+            log.atError().log("Error forwarding to appointments page: {}", ex.getMessage());
+            throw new UtecAppException("Error while trying to perform appointments request");
         }
     }
 }

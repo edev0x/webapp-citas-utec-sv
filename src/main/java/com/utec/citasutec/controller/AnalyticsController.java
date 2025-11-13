@@ -2,6 +2,7 @@ package com.utec.citasutec.controller;
 
 import com.google.gson.Gson;
 import com.utec.citasutec.service.AppointmentService;
+import com.utec.citasutec.util.formatters.ResponseUtils;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
@@ -32,17 +33,13 @@ public class AnalyticsController extends HttpServlet {
 
 
         if (Objects.nonNull(resourceParam) && resourceParam.equals("appointments") && Objects.nonNull(byResourceParam) && byResourceParam.equals("month")) {
-            response.getWriter().print(gson.toJson(this.appointmentService.countAppointmentsByMonth()));
+            ResponseUtils.sendSuccessResponseWithContent(response, this.appointmentService.countAppointmentsByMonth());
         } else if (Objects.nonNull(resourceParam) && resourceParam.equals("appointments") && Objects.nonNull(byResourceParam) && byResourceParam.equals("state")) {
-            response.getWriter().print(gson.toJson(this.appointmentService.countAppointmentsByState()));
+            ResponseUtils.sendSuccessResponseWithContent(response, this.appointmentService.countAppointmentsByState());
         }  else {
-            response.getWriter().print(gson.toJson(new HashMap<String, String>() {
-                {
-                    put("health", "ok");
-                }
-            }));
+            ResponseUtils.sendSuccessResponseWithContent(response, new HashMap<>() {{
+                put("health", "ok");
+            }});
         }
-
-        response.getWriter().flush();
     }
 }

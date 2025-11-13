@@ -65,8 +65,6 @@ function createUser() {
         headers: defaultJsonRequestHeaders,
         body: jsonPayload,
       }).then(async (res) => {
-        const data = await res.json();
-
         if (res.ok) {
           createUserForm.reset();
           createUserDialog.close();
@@ -75,7 +73,14 @@ function createUser() {
             window.location.reload();
           }, 1000);
         } else {
+          const data = await res.json();
+
           if (data.validationErrors) {
+            if (data.validationErrors.resourceExists) {
+              generalErrorElement.textContent = decodeHtml(data.validationErrors.resourceExists);
+              generalErrorElement.classList.remove("hidden");
+            }
+
             Object.entries(data.validationErrors).forEach(
               ([field, message]) => {
                 const errorElement = document.getElementById(`${field}Error`);
@@ -85,11 +90,6 @@ function createUser() {
                 }
               }
             )
-          } else {
-            if (generalErrorElement) {
-              generalErrorElement.textContent = decodeHtml(data.resourceExists) || "Ha ocurrido un error al procesar la solicitud.";
-              generalErrorElement.classList.remove("hidden");
-            }
           }
         }
       });

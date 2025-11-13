@@ -2,8 +2,7 @@ package com.utec.citasutec.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -17,6 +16,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "cita", indexes = {
     @Index(name = "id_estudiante", columnList = "id_estudiante"),
     @Index(name = "id_profesional", columnList = "id_profesional")

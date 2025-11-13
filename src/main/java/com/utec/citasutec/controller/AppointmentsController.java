@@ -2,14 +2,19 @@ package com.utec.citasutec.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.protobuf.Api;
 import com.utec.citasutec.model.dto.request.AppointmentRequestDto;
+import com.utec.citasutec.model.dto.response.ApiResponse;
 import com.utec.citasutec.model.dto.response.AppointmentResponse;
 import com.utec.citasutec.model.dto.response.AppointmentResponseDto;
 import com.utec.citasutec.service.AppointmentService;
 import com.utec.citasutec.util.AttributeIdentifiers;
 import com.utec.citasutec.util.ServletUtils;
+import com.utec.citasutec.util.exceptions.AppServiceTxException;
+import com.utec.citasutec.util.exceptions.RepositoryTransactionException;
 import com.utec.citasutec.util.formatters.ConstraintFormatter;
 import com.utec.citasutec.util.formatters.LocalDateGsonAdapter;
+import com.utec.citasutec.util.formatters.ResponseUtils;
 import com.utec.citasutec.util.validators.ValidationMessages;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
@@ -31,12 +36,12 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@WebServlet(name = "AppointmentsController", urlPatterns = { "/appointments" })
-@ServletSecurity(@HttpConstraint(rolesAllowed = { "ADMIN", "AUDITOR", "ESTUDIANTE", "PROFESIONAL" }))
+@WebServlet(name = "AppointmentsController", urlPatterns = {"/appointments"})
+@ServletSecurity(@HttpConstraint(rolesAllowed = {"ADMIN", "AUDITOR", "ESTUDIANTE", "PROFESIONAL"}))
 public class AppointmentsController extends HttpServlet {
     private static final Gson GSON = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateGsonAdapter())
-                .setPrettyPrinting().create();
+        .registerTypeAdapter(LocalDate.class, new LocalDateGsonAdapter())
+        .setPrettyPrinting().create();
 
     @Inject
     private AppointmentService appointmentService;
@@ -56,22 +61,14 @@ public class AppointmentsController extends HttpServlet {
 
             if (isAdmin || isAuditor) {
                 List<AppointmentResponseDto> allAppointments = appointmentService.findAll();
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().write(new Gson().toJson(allAppointments));
-                resp.getWriter().flush();
+                ResponseUtils.sendSuccessResponseWithContent(resp, allAppointments);
             } else {
                 List<AppointmentResponseDto> appointmentsByUser = appointmentService.findAllAppointmentsCreatedByUser(securityContext.getCallerPrincipal().getName());
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().write(new Gson().toJson(appointmentsByUser));
-                resp.getWriter().flush();
+                ResponseUtils.sendSuccessResponseWithContent(resp, appointmentsByUser);
             }
         } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write(new Gson().toJson(new HashMap<String, Object>() {{
-                put(AttributeIdentifiers.ERROR, true);
-                put(AttributeIdentifiers.MESSAGE, ValidationMessages.UNEXPECTED_ERROR);
-            }}));
-            resp.getWriter().flush();
+            log.atError().log("Unexpected error while getting data: {}", e.getMessage());
+            ResponseUtils.sendUnexpectedError(resp);
         }
     }
 
@@ -85,32 +82,74 @@ public class AppointmentsController extends HttpServlet {
 
             if (!constraintViolations.isEmpty()) {
                 log.error("Validation errors: {}", constraintViolations);
-                responseMap.put(AttributeIdentifiers.ERROR, true);
-                responseMap.put(AttributeIdentifiers.VALIDATION_ERRORS, ConstraintFormatter.getValidationErrors(constraintViolations));
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write(new Gson().toJson(responseMap));
-                resp.getWriter().flush();
+                ResponseUtils.sendResponse(resp, ApiResponse.validationError(ConstraintFormatter
+                    .getValidationErrors(constraintViolations)), HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
-
-
             log.atInfo().log("Appointment request received: {}", appointmentRequestDto);
 
             appointmentService.createAppointment(appointmentRequestDto);
-            responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.SUCCESSFUL_OPERATION);
-            responseMap.put(AttributeIdentifiers.ERROR, false);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.getWriter().write(new Gson().toJson(responseMap));
-            resp.getWriter().flush();
-
+            ResponseUtils.sendCreatedResponse(resp, "/appointments");
         } catch (Exception e) {
             log.error("Error parsing request body: {}", e.getMessage());
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write(new Gson().toJson(new HashMap<String, Object>() {{
-                put(AttributeIdentifiers.ERROR, true);
-                put(AttributeIdentifiers.MESSAGE, ValidationMessages.UNEXPECTED_ERROR);
-            }}));
-            resp.getWriter().flush();
+            ResponseUtils.sendUnexpectedError(resp);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletUtils.setJsonAsDefaultContentType(resp);
+        try {
+            boolean isAdmin = securityContext.isCallerInRole("ADMIN");
+            Integer appointmentId = Integer.parseInt(req.getParameter("id"));
+            if (isAdmin) {
+                appointmentService.deleteById(appointmentId);
+            } else {
+                appointmentService.deleteIfAssignedToUser(appointmentId, securityContext.getCallerPrincipal().getName());
+            }
+
+            ResponseUtils.sendNoContentResponse(resp);
+        } catch (RepositoryTransactionException ex) {
+            log.atError().log("Repository transaction failed: {}", ex.getMessage());
+            ResponseUtils.sendUnexpectedError(resp);
+        } catch (Exception e) {
+            log.atError().log("Error parsing request body: {}", e.getMessage());
+            ResponseUtils.sendUnexpectedError(resp);
+        }
+    }
+
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletUtils.setJsonAsDefaultContentType(resp);
+        try {
+            HashMap<String, Object> responseMap = new HashMap<>();
+            AppointmentRequestDto appointmentRequestDto = GSON.fromJson(req.getReader(), AppointmentRequestDto.class);
+            Set<ConstraintViolation<AppointmentRequestDto>> constraintViolations = validator.validate(appointmentRequestDto);
+
+            if (!constraintViolations.isEmpty()) {
+                log.error("Validation errors on update: {}", constraintViolations);
+                ResponseUtils.sendResponse(resp, ApiResponse.validationError(ConstraintFormatter
+                        .getValidationErrors(constraintViolations)), HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+
+            boolean isAdmin = securityContext.isCallerInRole("ADMIN");
+
+            if (isAdmin) {
+                this.appointmentService.updateAppointment(appointmentRequestDto);
+            } else {
+                this.appointmentService.updateAppointmentIfAssignedToUser(
+                    appointmentRequestDto,
+                    securityContext.getCallerPrincipal().getName()
+                );
+            }
+
+            ResponseUtils.sendResponse(resp, ApiResponse.success(ValidationMessages.SUCCESSFUL_OPERATION), HttpServletResponse.SC_OK);
+        } catch (AppServiceTxException e) {
+            log.atError().log("Service transaction failed: {}", e.getMessage());
+            ResponseUtils.sendResponse(resp, ApiResponse.error(ValidationMessages.UNEXPECTED_ERROR), HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            log.atError().log("Unexpected error: {}", e.getMessage());
+            ResponseUtils.sendUnexpectedError(resp);
         }
     }
 }

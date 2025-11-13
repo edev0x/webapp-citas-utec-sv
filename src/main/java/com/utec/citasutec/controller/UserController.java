@@ -3,12 +3,14 @@ package com.utec.citasutec.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.utec.citasutec.model.dto.request.UserRequestDto;
+import com.utec.citasutec.model.dto.response.ApiResponse;
 import com.utec.citasutec.model.dto.response.UserResponseDto;
 import com.utec.citasutec.model.ejb.SecurityBean;
 import com.utec.citasutec.service.UserService;
 import com.utec.citasutec.util.AttributeIdentifiers;
 import com.utec.citasutec.util.ServletUtils;
 import com.utec.citasutec.util.formatters.ConstraintFormatter;
+import com.utec.citasutec.util.formatters.ResponseUtils;
 import com.utec.citasutec.util.validators.ValidationMessages;
 
 import jakarta.inject.Inject;
@@ -31,7 +33,7 @@ import java.util.*;
 @ServletSecurity(@HttpConstraint(rolesAllowed = {"ADMIN"}))
 public class UserController extends HttpServlet {
 
-    private static final Gson GSON = new GsonBuilder().create();
+    private static final Gson GSON = new Gson();
 
     @Inject
     private UserService userService;
@@ -45,51 +47,40 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserResponseDto> users = userService.findAllWithRoles();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        String jsonResponse = new Gson().toJson(users);
-        resp.getWriter().write(jsonResponse);
-        resp.getWriter().flush();
+        ResponseUtils.sendSuccessResponseWithContent(resp, users);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getMethod().equalsIgnoreCase("POST")) {
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method Not Allowed");
-            return;
-        }
+       try {
+           ServletUtils.setJsonAsDefaultContentType(resp);
 
-        ServletUtils.setJsonAsDefaultContentType(resp);
+           UserRequestDto userRequestDto = this.parseAndValidateRequest(req, resp);
+           if (Objects.isNull(userRequestDto)) {
+               return;
+           }
 
-        HashMap<String, Object> responseMap = new HashMap<>();
+           boolean emailExists = userService.findByEmail(userRequestDto.email()) != null;
 
-        UserRequestDto userRequestDto = this.parseAndValidateRequest(req, resp);
-        if (Objects.isNull(userRequestDto)) {
-            return;
-        }
+           if (emailExists) {
+               ResponseUtils.sendResponse(resp, ApiResponse.validationError(new HashMap<>(){
+                   {
+                       put(AttributeIdentifiers.RESOURCE_EXISTS, ValidationMessages.USER_ALREADY_EXISTS);
+                   }
+               }), HttpServletResponse.SC_CONFLICT);
+               return;
+           }
 
-        boolean emailExists = userService.findByEmail(userRequestDto.email()) != null;
-
-        if (emailExists) {
-            responseMap.put(AttributeIdentifiers.RESOURCE_EXISTS, ValidationMessages.USER_ALREADY_EXISTS);
-            responseMap.put(AttributeIdentifiers.ERROR, true);
-            sendResponse(resp, HttpServletResponse.SC_CONFLICT, responseMap);
-            return;
-        }
-
-        userService.save(userRequestDto);
-        responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.SUCCESSFUL_OPERATION);
-        responseMap.put(AttributeIdentifiers.ERROR, false);
-
-        sendResponse(resp, HttpServletResponse.SC_CREATED, responseMap);
+           userService.save(userRequestDto);
+           ResponseUtils.sendCreatedResponse(resp, "/api/users");
+       } catch (Exception e) {
+           log.error("Error creating user: {}", e.getMessage());
+           ResponseUtils.sendUnexpectedError(resp);
+       }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getMethod().equalsIgnoreCase("DELETE")) {
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method Not Allowed");
-            return;
-        }
         log.info("Deleting user...");
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
@@ -103,11 +94,7 @@ public class UserController extends HttpServlet {
             UserResponseDto currentUser = users.stream().filter(u -> u.email().equals(currentUserEmail)).findFirst().orElse(null);
 
             if (Objects.isNull(currentUser)) {
-                responseMap.put(AttributeIdentifiers.ERROR, true);
-                responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.CANNOT_DELETE_SAME_USER);
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write(GSON.toJson(responseMap));
-                resp.getWriter().flush();
+                ResponseUtils.sendResponse(resp, ApiResponse.error(ValidationMessages.CANNOT_DELETE_SAME_USER), HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
             Integer userId = Integer.parseInt(req.getParameter("id"));
@@ -121,50 +108,34 @@ public class UserController extends HttpServlet {
                 .anyMatch(u -> Objects.nonNull(u.role()) && u.role().name().equals("ADMIN"));
 
             if (totalAdmins == 1 && isUserToBeDeletedAnAdmin) {
-                responseMap.put(AttributeIdentifiers.ERROR, true);
-                responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.CANNOT_DELETE_DEFAULT_ADMIN);
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write(GSON.toJson(responseMap));
-                resp.getWriter().flush();
+                ResponseUtils.sendResponse(resp, ApiResponse.error(ValidationMessages.CANNOT_DELETE_DEFAULT_ADMIN), HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
 
             userService.deleteById(userId);
-
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            resp.getWriter().write(GSON.toJson(responseMap));
-            resp.getWriter().flush();
+            ResponseUtils.sendNoContentResponse(resp);
         } catch (Exception e) {
             log.error("Error deleting user: {}", e.getMessage());
-            responseMap.put(AttributeIdentifiers.ERROR, true);
-            responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.UNEXPECTED_ERROR);
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write(GSON.toJson(e.getMessage()));
-            resp.getWriter().flush();
+            ResponseUtils.sendUnexpectedError(resp);
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getMethod().equalsIgnoreCase("PUT")) {
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method Not Allowed");
-            return;
+        try {
+            ServletUtils.setJsonAsDefaultContentType(resp);
+
+            UserRequestDto userRequestDto = this.parseAndValidateRequest(req, resp);
+
+            if (Objects.isNull(userRequestDto)) {
+                return;
+            }
+            userService.updateUser(userRequestDto);
+            ResponseUtils.sendCommonSuccess(resp);
+        } catch (Exception e) {
+            log.error("Error updating user: {}", e.getMessage());
+            ResponseUtils.sendUnexpectedError(resp);
         }
-
-        ServletUtils.setJsonAsDefaultContentType(resp);
-
-        HashMap<String, Object> responseMap = new HashMap<>();
-
-        UserRequestDto userRequestDto = this.parseAndValidateRequest(req, resp);
-
-        if (Objects.isNull(userRequestDto)) {
-            return;
-        }
-
-        userService.updateUser(userRequestDto);
-        responseMap.put(AttributeIdentifiers.MESSAGE, ValidationMessages.SUCCESSFUL_OPERATION);
-        responseMap.put(AttributeIdentifiers.ERROR, false);
-        sendResponse(resp, HttpServletResponse.SC_OK, responseMap);
     }
 
     private UserRequestDto parseAndValidateRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -172,25 +143,10 @@ public class UserController extends HttpServlet {
         Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
 
         if (!violations.isEmpty()) {
-            sendErrorResponse(resp, ConstraintFormatter.getValidationErrors(violations));
+            ResponseUtils.sendResponse(resp, ApiResponse.validationError(ConstraintFormatter.getValidationErrors(violations)), HttpServletResponse.SC_BAD_REQUEST);
             return null;
         }
 
         return userRequestDto;
-    }
-
-    private void sendErrorResponse(HttpServletResponse resp, Object errorValue)
-        throws IOException {
-        HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put(AttributeIdentifiers.VALIDATION_ERRORS, errorValue);
-        responseMap.put(AttributeIdentifiers.ERROR, true);
-        sendResponse(resp, HttpServletResponse.SC_BAD_REQUEST, responseMap);
-    }
-
-    private void sendResponse(HttpServletResponse resp, int status, HashMap<String, Object> responseMap)
-        throws IOException {
-        resp.setStatus(status);
-        resp.getWriter().write(GSON.toJson(responseMap));
-        resp.getWriter().flush();
     }
 }

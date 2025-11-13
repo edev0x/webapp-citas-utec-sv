@@ -20,24 +20,21 @@ function editAppointment() {
       submitButton.textContent = "Por favor espere...";
 
       const formData = new FormData(event.target);
+
       const payload = {
-        id: Number(formData.get("appointmentId")),
-        appointmentDate: formData.get("appointmentDate"),
-        appointmentStartTime: formData.get("appointmentStartTime"),
-        appointmentEndTime: formData.get("appointmentEndTime"),
-        state: formData.get("appointmentState"),
-        reason: formData.get("appointmentDescription"),
-        user: {
-          id: Number(formData.get("userId"))
-        },
-        professional: {
-          id: Number(formData.get("professionalId"))
-        }
+        id: Number(formData.get("appointmentId-edit")),
+        appointmentDate: formData.get("appointmentDate-edit"),
+        appointmentStartTime: formData.get("appointmentStartTime-edit"),
+        appointmentEndTime: formData.get("appointmentEndTime-edit"),
+        state: formData.get("appointmentState-edit"),
+        reason: formData.get("appointmentDescription-edit"),
+        userId: Number(formData.get("userId-edit")),
+        professionalId: Number(formData.get("professionalId-edit"))
       };
 
       const jsonPayload = JSON.stringify(payload);
 
-      fetch(`${getBaseUrl()}/appointments/${payload.id}`, {
+      fetch(`${getBaseUrl()}/appointments`, {
         method: "PUT",
         headers: defaultJsonRequestHeaders,
         body: jsonPayload
@@ -83,7 +80,6 @@ function editAppointment() {
   })
 
   deleteAppointmentButton.addEventListener("click", function () {
-    document.getElementById("appointmentId-delete").value = editAppointmentForm.querySelector("#appointmentId-edit").value;
     deleteAppointmentDialog.showModal();
   });
 }

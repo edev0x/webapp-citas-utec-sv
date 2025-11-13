@@ -18,15 +18,12 @@ const eventsColors = {
 
 document.addEventListener("DOMContentLoaded", function() {
     const calendarEl = document.getElementById("calendar");
-    const editAppointmentForm = document.getElementById("appointment-edit-form");
-    const userIdInput = document.getElementById("userId-edit");
-    const professionalIdInput = document.getElementById("professionalId-edit");
     const appointmentDateInput = document.getElementById("appointmentDate-edit");
     const appointmentStartTimeInput = document.getElementById("appointmentStartTime-edit");
     const appointmentEndTimeInput = document.getElementById("appointmentEndTime-edit");
-    const appointmentStateSelect = document.getElementById("appointmentState-edit");
     const appointmentReasonInput = document.getElementById("appointmentDescription-edit");
     const appointmentIdInput = document.getElementById("appointmentId-edit");
+    const deleteIdInput = document.getElementById("appointmentId-delete");
 
     if (calendarEl) {
         const calendarHeaderToolBar = {
@@ -103,12 +100,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 return {
                     html: `
-                        <div class="fc-event-main-frame cursor-pointer w-full">
+                        <div class="fc-event-main-frame cursor-pointer w-full px-2 mt-1">
                             <div class="fc-event-title-container">
                                 <div class="fc-event-time">${eventInfo.timeText}</div>
                                 <div class="fc-event-title overflow-hidden truncate font-medium">${eventTitle}</div>
                             </div>
-                            ${eventDescription ? `<div class="fc-event-description overflow-hidden truncate">${eventDescription}</div>` : ""}
+                            ${eventDescription ? `<div class="fc-event-description mt-1 truncate">${eventDescription}</div>` : ""}
                         </div>
                     `
                 }
@@ -120,8 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     window.open(eventObj.url, '_blank');
                     info.jsEvent.preventDefault();
                 } else {
-                    console.log(eventObj.extendedProps);
-
                     setProfessionalDefaultValue(eventObj.extendedProps.professionalId);
                     setDefaultUserValue(eventObj.extendedProps.userId);
                     setDefaultAppointmentState(eventObj.extendedProps.state);
@@ -131,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     appointmentEndTimeInput.value = eventObj.extendedProps.appointmentEndTime;
                     appointmentReasonInput.value = eventObj.extendedProps.reason;
                     appointmentIdInput.value = eventObj.extendedProps.id;
+                    deleteIdInput.value = eventObj.extendedProps.id;
 
                     openEditEventModal();
                 }

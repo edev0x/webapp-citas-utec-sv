@@ -46,4 +46,14 @@ public class UserRepository extends CrudRepository<User> {
                 .setParameter("role", role)
                 .getResultList();
     }
+
+    public Optional<User> findById(Integer id) {
+        try {
+            return Optional.ofNullable(em.createQuery("FROM User u JOIN FETCH u.rol WHERE u.id = :id", User.class)
+                    .setParameter("id", id)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
 }

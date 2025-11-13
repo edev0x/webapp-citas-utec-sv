@@ -20,4 +20,10 @@ public interface ValidationMessages {
    String CANNOT_DELETE_SAME_USER = "No se puede eliminar su propio usuario.";
    String CANNOT_DELETE_DEFAULT_ADMIN = "No se puede eliminar el usuario administrador por defecto. Cree un usuario nuevo con el rol de ADMINISTRADOR si desea eliminar esta cuenta.";
    String UNEXPECTED_ERROR = "Ha ocurrido un error inesperado durante la operación";
+
+   String USER_NOT_FOUND_EXCEPTION = "User with ID %d not found";
+   String PROFESSIONAL_NOT_FOUND_EXCEPTION = "Professional with ID %d not found";
+   String DB_ERROR_EXCEPTION = "Database error while updating appointment";
+   String UNEXPECTED_ERROR_EXCEPTION = "Unexpected error while updating appointment";
+
 }
