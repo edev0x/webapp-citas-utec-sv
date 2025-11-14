@@ -40,6 +40,7 @@ public class Professional {
     private Boolean isActive;
 
     @OneToMany(mappedBy = "professional")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "professional")

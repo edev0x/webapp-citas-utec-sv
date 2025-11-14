@@ -46,7 +46,7 @@ function createProfessional() {
               fullName: formData.get("professional-fullName"),
               email: formData.get("professional-email"),
               isActive: isActiveInput.checked,
-              specialty: specialtyValue || "SIN ESPECIALIDAD",
+              specialty: specialtyValue?.trim() || "SIN ESPECIALIDAD",
             };
             
             const jsonPayload = JSON.stringify(payload);

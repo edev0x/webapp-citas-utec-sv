@@ -26,7 +26,7 @@
               <div class="max-w-full overflow-x-auto custom-scrollbar">
                 <c:choose>
                   <c:when test="${empty professionals and professionals != null}">
-                    <div class="flex justify-center items-center h-full min-w-full">
+                    <div class="flex justify-center items-center h-full min-w-full" style="height: 400px;">
                       <p class="text-gray-500">No hay profesionales registrados</p>
                     </div>
                   </c:when>
@@ -34,17 +34,17 @@
                     <table class="min-w-full">
                       <thead class="border-gray-100 border-y bg-gray-50">
                         <tr>
-                          <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
+                          <th class="px-6 py-3 text-left whitespace-nowrap">
                             <span class="block text-gray-700 font-medium text-sm">
                               Id
                             </span>
                           </th>
-                          <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
+                          <th class="px-6 py-3 text-left whitespace-nowrap">
                             <span class="block text-gray-700 font-medium text-sm">
                               Profesional
                             </span>
                           </th>
-                          <th class="px-6 py-3 text-left tracking-wider whitespace-nowrap">
+                          <th class="px-6 py-3 text-left whitespace-nowrap">
                             <span class="block text-gray-700 font-medium text-sm">
                               Especialidad
                             </span>
@@ -84,7 +84,7 @@
                                   <button type="button" id="open-delete-professional-dialog-btn" class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                                     <i data-feather="trash-2" class="w-4 h-4"></i>
                                   </button>
-                                  <button type="button" class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-gray-800 px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
+                                  <button type="button" id="open-professional-edit-dialog-button" class="btn-ghost text-gray-600 hover:bg-primary/10 hover:text-gray-800 px-3 py-2 rounded-md inline-flex items-center text-sm font-medium">
                                     <i data-feather="edit" class="w-4 h-4"></i>
                                   </button>
                                 </div>
@@ -103,5 +103,6 @@
     </div>
   </div>
   <jsp:include page="/WEB-INF/views/partials/professionals/create-professional-dialog.jsp" />
+  <jsp:include page="/WEB-INF/views/partials/professionals/edit-professional-dialog.jsp" />
   <jsp:include page="/WEB-INF/views/partials/professionals/delete-professional-dialog.jsp" />
 </t:layout>
