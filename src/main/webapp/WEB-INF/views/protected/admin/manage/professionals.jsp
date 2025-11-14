@@ -25,7 +25,7 @@
               </div>
               <div class="max-w-full overflow-x-auto custom-scrollbar">
                 <c:choose>
-                  <c:when test="${empty professionals and professionals != null}">
+                  <c:when test="${empty professionals or professionals == null}">
                     <div class="flex justify-center items-center h-full min-w-full" style="height: 400px;">
                       <p class="text-gray-500">No hay profesionales registrados</p>
                     </div>

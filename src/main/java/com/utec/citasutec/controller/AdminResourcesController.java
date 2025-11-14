@@ -68,8 +68,10 @@ public class AdminResourcesController extends HttpServlet {
                 break;
             case ResourceConstants.APPOINTMENTS:
                 handleGetAppointmentsResource(req, resp);
+                break;
             case ResourceConstants.ROLES:
-                resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=not_implemented");
+                handleGetRolesResource(req, resp);
+                break;
             default:
                 log.warn("Unknown resource requested: {}. Redirecting to admin dashboard.", resource);
                 resp.sendRedirect(req.getContextPath() + "/app/dashboard?error=unknown_resource");
@@ -112,6 +114,7 @@ public class AdminResourcesController extends HttpServlet {
      */
     private void handleGetServicesResource(HttpServletRequest request, HttpServletResponse response) {
         try {
+            request.setAttribute("services", null);
             request.getRequestDispatcher(RedirectUtils.getResourcePath(ResourceConstants.SERVICES)).forward(request, response);
         } catch (ServletException | IOException | NumberFormatException e) {
             log.atError().log("Error forwarding to services management page: {}", e.getMessage());
@@ -137,6 +140,15 @@ public class AdminResourcesController extends HttpServlet {
         } catch (ServletException | IOException ex) {
             log.atError().log("Error forwarding to appointments page: {}", ex.getMessage());
             throw new UtecAppException("Error while trying to perform appointments request");
+        }
+    }
+
+    private void handleGetRolesResource(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher(RedirectUtils.getResourcePath(ResourceConstants.ROLES)).forward(request, response);
+        } catch (ServletException | IOException ex) {
+            log.atError().log("Error forwarding to roles page: {}", ex.getMessage());
+            throw new UtecAppException("Error while trying to perform roles request");
         }
     }
 }

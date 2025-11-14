@@ -18,7 +18,7 @@
           </div>
           <div class="space-y-2">
             <label for="specialtyId-edit" class="label required">Especialidad:</label>
-            <div id="specialties-select" class="select w-full">
+            <div id="specialties-edit-select" class="select w-full">
               <button type="button" class="btn-outline justify-between font-normal w-full" id="specialties-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="specialties-select-listbox">
                 <span class="truncate"></span>
 

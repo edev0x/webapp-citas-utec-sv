@@ -10,8 +10,10 @@ function updateProfessional() {
   const isActiveInput = document.getElementById("professional-isActive-edit");
   const submitButton = document.getElementById("save-professional-edit-button");
   const spinner = document.getElementById("professional-edit-loader");
-  const specialtyListBox = document.getElementById(
-    "specialties-select-listbox"
+  const specialtiesSelect = document.getElementById("specialties-edit-select");
+
+  const specialtyListBox = specialtiesSelect.querySelector(
+    "#specialties-select-listbox"
   );
 
   const openDialogButton = document.querySelectorAll(
@@ -21,8 +23,6 @@ function updateProfessional() {
   const closeDialogButton = document.getElementById(
     "cancel-professional-edit-button"
   );
-
-  const specialtiesSelect = document.getElementById("specialties-select");
 
   openDialogButton.forEach((button) => {
     button.addEventListener("click", () => {
@@ -44,38 +44,6 @@ function updateProfessional() {
       professionalEditForm["professional-email-edit"].value = dataToEdit.email;
       isActiveInput.checked = dataToEdit.isActive;
 
-      specialtiesSelect.addEventListener("basecoat:initialized", () => {
-        const listbox = specialtiesSelect.querySelector('[role="listbox"]');
-        const allOptions = Array.from(
-          listbox.querySelectorAll('[role="option"]')
-        );
-        const options = allOptions.filter(
-          (opt) => opt.getAttribute("aria-disabled") !== "true"
-        );
-
-        specialtiesSelect.selectByText = function (text) {
-          const option = options.find((opt) => {
-            const optionText = (opt.dataset.label || opt.textContent).trim();
-            return optionText === text.trim();
-          });
-
-          if (option) {
-            option.setAttribute("aria-selected", "true");
-            option.classList.add("active");
-            options.forEach((opt) => {
-              if (opt !== option) {
-                opt.removeAttribute("aria-selected");
-                opt.classList.remove("active");
-              }
-            });
-            return true;
-          }
-          return false;
-        };
-
-        specialtiesSelect.selectByText(dataToEdit.specialty);
-      });
-
       professionalEditDialog.showModal();
     });
   });
@@ -95,7 +63,7 @@ function updateProfessional() {
     try {
       const formData = new FormData(event.target);
 
-      const specialtyValue = specialtyListBox.querySelector(
+      let specialtyValue = specialtyListBox.querySelector(
         '[aria-selected="true"]'
       )?.textContent;
 
@@ -104,7 +72,7 @@ function updateProfessional() {
         fullName: formData.get("professional-fullName-edit"),
         email: formData.get("professional-email-edit"),
         isActive: isActiveInput.checked,
-        specialty: specialtyValue || "SIN ESPECIALIDAD",
+        specialty: specialtyValue?.trim() || "SIN ESPECIALIDAD",
       };
 
       const jsonPayload = JSON.stringify(payload);

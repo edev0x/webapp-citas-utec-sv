@@ -19,7 +19,7 @@
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <form method="get" id="uf-search-form hidden">
-                    <div class="relative">
+                    <div class="relative hidden">
                       <!-- Search input -->
                       <span class="absolute -translate-y-1/2 pointer-events-none top-1/2 left-4">
                         <svg class="fill-gray-500 dark:fill-gray-400" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
