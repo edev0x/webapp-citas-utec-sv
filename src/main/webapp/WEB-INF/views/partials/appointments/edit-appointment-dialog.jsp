@@ -100,13 +100,25 @@
           <div class="space-y-2">
             <label for="appointmentState-edit" class="label">Estado:</label>
             <div id="appointment-state-select" class="select w-full">
-              <button type="button" class="btn-outline justify-between font-normal w-full" id="appointment-state-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="appointment-state-listbox">
-                <span class="truncate"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0">
-                  <path d="m7 15 5 5 5-5" />
-                  <path d="m7 9 5-5 5 5" />
-                </svg>
-              </button>
+              <c:if test="${security.hasRole('ESTUDIANTE')}">
+                <button type="button" class="btn-outline justify-between font-normal w-full" id="appointment-state-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="appointment-state-listbox" disabled="disabled">
+                  <span class="truncate"></span>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0">
+                    <path d="m7 15 5 5 5-5" />
+                    <path d="m7 9 5-5 5 5" />
+                  </svg>
+                </button>
+              </c:if>
+              <c:if test="${security.hasRole('ADMIN')}">
+                <button type="button" class="btn-outline justify-between font-normal w-full" id="appointment-state-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="appointment-state-listbox">
+                  <span class="truncate"></span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0">
+                    <path d="m7 15 5 5 5-5" />
+                    <path d="m7 9 5-5 5 5" />
+                  </svg>
+                </button>
+              </c:if>
               <div id="appointment-state-popover" data-popover aria-hidden="true">
                 <header>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
@@ -121,9 +133,20 @@
                     <div role="heading" id="group-label-select-items-1">Estado</div>
 
                     <c:forEach items="${appointmentStates}" var="appointmentState">
-                      <div id="select-items-1-${appointmentState['value']}" role="option" data-value="${appointmentState['value']}">
-                          ${appointmentState['translation']}
-                      </div>
+                      <c:choose>
+                        <c:when test="${security.hasRole('ESTUDIANTE')}">
+                          <c:if test="${appointmentState['value'] == 'PENDIENTE'}">
+                            <div id="select-items-1-${appointmentState['value']}" role="option" data-value="${appointmentState['value']}" data-disabled="true" disabled>
+                              ${appointmentState['translation']}
+                            </div>
+                          </c:if>
+                        </c:when>
+                        <c:otherwise>
+                          <div id="select-items-1-${appointmentState['value']}" role="option" data-value="${appointmentState['value']}">
+                            ${appointmentState['translation']}
+                          </div>
+                        </c:otherwise>
+                      </c:choose>
                     </c:forEach>
                   </div>
                 </div>
@@ -156,11 +179,13 @@
       </div>
 
       <footer class="flex justify-between gap-2">
-        <button type="button"
-                class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium"
-                id="delete-appointment-button">
-          <i data-feather="trash-2"></i>
-        </button>
+        <c:if test="${security.hasRole('ADMIN')}">
+          <button type="button"
+                  class="btn-ghost text-gray-600 hover:bg-destructive/10 hover:text-destructive px-3 py-2 rounded-md inline-flex items-center text-sm font-medium"
+                  id="delete-appointment-button">
+            <i data-feather="trash-2"></i>
+          </button>
+        </c:if>
         <div class="flex justify-end gap-2">
           <button type="button" class="btn-secondary" id="cancel-appointment-edit-button">Cancelar</button>
           <button type="submit" class="btn-primary" id="save-appointment-edit-button">Guardar</button>

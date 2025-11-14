@@ -21,7 +21,7 @@ public class UserRepository extends CrudRepository<User> {
 
     public Optional<User> findByEmail(String username) {
         try {
-            return Optional.ofNullable(em.createQuery("FROM User u JOIN FETCH u.rol WHERE u.email = :email", User.class)
+            return Optional.ofNullable(em.createQuery("FROM User u JOIN FETCH u.rol WHERE u.email = :email AND u.isActive = true", User.class)
                     .setParameter("email", username)
                     .getSingleResult());
         } catch (NoResultException ex) {

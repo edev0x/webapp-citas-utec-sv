@@ -100,6 +100,7 @@ public class AppointmentsRepository extends CrudRepository<Appointment> {
 
     public List<Appointment> findAllAppointmentsByUser(String email) {
         return em.createQuery("SELECT a FROM Appointment a JOIN FETCH a.user u JOIN FETCH a.professional WHERE u.email = :email", Appointment.class)
+            .setParameter("email", email)
             .getResultList();
     }
 
