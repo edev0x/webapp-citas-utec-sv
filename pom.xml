@@ -29,9 +29,6 @@
         <jakarta.transaction-api.version>2.0.1</jakarta.transaction-api.version>
         <spring.security.version>6.5.4</spring.security.version>
         <glassfish.home>${env.GLASSFISH_HOME}</glassfish.home>
-        <glassfish.dir>
-            ${glassfish.home}/glassfish7/glassfish
-        </glassfish.dir>
         <hibernate.entitymanager.version>5.6.8.Final</hibernate.entitymanager.version>
     </properties>
 
@@ -188,7 +185,7 @@
                 <version>2.1</version>
                 <configuration>
                     <glassfishDirectory>
-                        ${glassfish.dir}
+                        ${glassfish.home}
                     </glassfishDirectory>
                     <user>
                         admin
