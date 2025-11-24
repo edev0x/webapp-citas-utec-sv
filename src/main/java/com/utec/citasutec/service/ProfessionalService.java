@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.utec.citasutec.model.dto.request.ProfessionalRequestDto;
 import com.utec.citasutec.model.dto.request.ProfessionalServiceRequestDto;
 import com.utec.citasutec.model.dto.response.ProfessionalResponseDto;
+import com.utec.citasutec.model.dto.response.ProfessionalServiceResponseDto;
 import com.utec.citasutec.model.entity.Professional;
 import com.utec.citasutec.model.entity.Service;
 import com.utec.citasutec.repository.ProfessionalRepository;
@@ -28,7 +30,7 @@ public class ProfessionalService {
     private ProfessionalRepository professionalRepository;
 
     @Inject
-    private ProfessionalServiceRepository  serviceRepository;
+    private ProfessionalServiceRepository serviceRepository;
 
     public long countAll() {
         return professionalRepository.count();
@@ -114,7 +116,7 @@ public class ProfessionalService {
     @Transactional
     public void updateProfessional(ProfessionalRequestDto professionalRequestDto) {
         try {
-            Professional professional  = this.professionalRepository.findById(professionalRequestDto.id())
+            Professional professional = this.professionalRepository.findById(professionalRequestDto.id())
                 .orElseThrow(() -> new AppServiceTxException("Professional with ID " + professionalRequestDto.id() + " not found"));
 
             professional.setName(professionalRequestDto.fullName());
@@ -133,7 +135,7 @@ public class ProfessionalService {
     @Transactional
     public void updateService(ProfessionalServiceRequestDto professionalServiceRequestDto) {
         try {
-            Service service  = this.serviceRepository.findById(professionalServiceRequestDto.id())
+            Service service = this.serviceRepository.findById(professionalServiceRequestDto.id())
                 .orElseThrow(() -> new AppServiceTxException("Service with ID " + professionalServiceRequestDto.id() + " not found"));
 
             Professional professional = this.professionalRepository.findById(professionalServiceRequestDto.professionalId())
@@ -156,5 +158,10 @@ public class ProfessionalService {
             log.atError().log("Error updating service with ID {}: {}", professionalServiceRequestDto.id(), e.getMessage());
             throw new AppServiceTxException("Error updating service", e);
         }
+    }
+
+    public List<ProfessionalServiceResponseDto> findAllServicesByProfessionalEmail(String email) {
+        return this.professionalRepository.findServicesByProfessional(email).stream()
+            .map(ProfessionalServiceResponseDto::fromEntity).toList();
     }
 }

@@ -33,4 +33,8 @@ public class SecurityBean {
     public Set<String> getRoles() {
         return Collections.singleton(userService.findByEmail(this.getUsername()).role().name());
     }
+
+    public boolean isAdmin() {
+        return hasRole("ADMIN");
+    }
 }
