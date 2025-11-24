@@ -60,6 +60,7 @@ public class AppointmentsController extends HttpServlet {
                 List<AppointmentResponseDto> allAppointments = appointmentService.findAll();
                 ResponseUtils.sendSuccessResponseWithContent(resp, allAppointments);
             } else {
+                log.atInfo().log("Getting appointments by user: {}", securityContext.getCallerPrincipal().getName());
                 List<AppointmentResponseDto> appointmentsByUser = appointmentService.findAllAppointmentsCreatedByUser(securityContext.getCallerPrincipal().getName());
                 ResponseUtils.sendSuccessResponseWithContent(resp, appointmentsByUser);
             }
