@@ -81,8 +81,9 @@ public class AdminResourcesController extends HttpServlet {
 
     /**
      * Handles requests related to user resources.
-     * @param request
-     * @param response
+     * TODO: Refactor pagination service to allow pagination and filtering options
+     * @param request servlet request
+     * @param response servlet response
      */
     private void handleGetUserResource(HttpServletRequest request, HttpServletResponse response) {
         try {

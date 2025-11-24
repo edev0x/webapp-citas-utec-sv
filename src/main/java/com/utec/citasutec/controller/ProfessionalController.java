@@ -64,9 +64,9 @@ public class ProfessionalController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Integer professionalIdParam = Integer.parseInt(req.getParameter("id"));
+            int professionalIdParam = Integer.parseInt(req.getParameter("id"));
 
-            if (Objects.isNull(professionalIdParam) || professionalIdParam <= 0) {
+            if (professionalIdParam <= 0) {
                 log.atWarn().log("Missing professionalId parameter in delete request");
                 ResponseUtils.sendResponse(resp,
                         ApiResponse.validationError(new HashMap<>() {
