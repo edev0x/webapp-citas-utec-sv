@@ -41,7 +41,7 @@
                 <a href="${pageContext.request.contextPath}/app/manage?resource=users" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/users') ? 'bg-gray-800 font-medium' : ''} ">
                   <span>Usuarios</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/app/manage?resource=roles" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
+                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/roles') ? 'bg-gray-800 font-medium' : ''}">
                   <span>Roles</span>
                 </a>
                 <a href="${pageContext.request.contextPath}/app/manage?resource=services" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition text-sm text-gray-300 hover:text-white ${fn:containsIgnoreCase(path, '/manage/services') ? 'bg-gray-800 font-medium' : ''}">
@@ -76,7 +76,7 @@
               <span>Calendario</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/app/s/my-appointments" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(path, '/app/my-appointments') ? 'bg-gray-800 font-medium' : ''}">
+            <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition text-sm ${fn:contains(path, '/app/my-appointments') ? 'bg-gray-800 font-medium' : ''}">
               <i data-feather="bookmark" class="w-5 h-5 flex-shrink-0"></i>
               <span>Mis Citas</span>
             </a>
