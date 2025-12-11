@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @WebServlet(name = "RolesController", urlPatterns = { "/api/roles" })
-@ServletSecurity(@HttpConstraint(rolesAllowed = { "ADMIN" }))
+@ServletSecurity(@HttpConstraint(rolesAllowed ={ "ADMIN" }))
 public class RolesController extends HttpServlet {
     private static final Gson GSON = new Gson();
 

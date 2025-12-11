@@ -24,4 +24,5 @@ public interface ValidationMessages {
    String PROFESSIONAL_NOT_FOUND_EXCEPTION = "Professional with ID %d not found";
    String ROLE_MAX_LENGTH = "El nombre del rol debe contener entre 4 y 20 caracteres";
    String ROLE_ID_REQUIRED = "El identificador del rol es obligatorio";
+   String SERVICE_NAME_LENGTH = "El nombre del servicio debe contener entre 4 y 250 caracteres";
 }

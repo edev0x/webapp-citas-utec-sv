@@ -91,3 +91,13 @@ export const setDefaultUserValue = (id) => {
     }
   }
 }
+
+export const cleanUpFormErrors = () => {
+  const errorElements = document.getElementsByTagName("p");
+  [...errorElements].forEach(element => {
+    if (element.id.includes("-error") && !element.classList.contains("hidden")) {
+      element.classList.add("hidden");
+      element.textContent = "";
+    }
+  })
+}
